@@ -8,18 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Boot.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 0
-    path: Assets/Scenes/MainMenu.unity
-    guid: 158d3bb2a79f9804aa15824fbcb0f252
-  - enabled: 0
-    path: Assets/Scenes/Quiz.unity
-    guid: 5d8cdd827175c844687a96549e702110
-  - enabled: 0
-    path: Assets/Scenes/Achievements.unity
-    guid: c7bd955dba46acc46a0e4b0036ce0b8b
-  - enabled: 0
-    path: Assets/Scenes/Settings.unity
-    guid: 353a1654385ef7a48b227881a1080ddc
+  - enabled: 1
+    path: Assets/_Game/Scenes/Quiz.unity
+    guid: ae0b3c9b0f6831342ba6e3b9bfc0666c
+  - enabled: 1
+    path: Assets/_Game/Scenes/Achievements.unity
+    guid: ed7c49910a3064346ac585c87b4d6faf
+  - enabled: 1
+    path: Assets/_Game/Scenes/Settings.unity
+    guid: d5a24f8f7d5d9ca48bc1a8ce861621ca
+  - enabled: 1
+    path: Assets/_Game/Scenes/MainMenu.unity
+    guid: 25c7dc83b53885749bf94918a959c2c6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

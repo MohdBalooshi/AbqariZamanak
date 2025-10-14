@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b53a3bf59271cf04780a6c851285936d
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 234295
+  packageName: Arabic Writer
+  packageVersion: 2.2
+  assetPath: Assets/ArabicWriter/Scripts/Notices.txt
+  uploadId: 741076

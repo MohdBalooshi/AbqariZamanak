@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: fb719e0e4ab4fbb46b2713167f9d49a7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 234295
+  packageName: Arabic Writer
+  packageVersion: 2.2
+  assetPath: Assets/ArabicWriter/Scripts/ArabicSupport.cs
+  uploadId: 741076

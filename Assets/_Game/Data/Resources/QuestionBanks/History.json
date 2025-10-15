@@ -1,0 +1,14 @@
+{
+  "categoryId": "history",
+  "categoryName": "History",
+  "questionsPerRound": 5,
+  "questions": [
+    {
+      "id": "his_001",
+      "text": "Who was the first President of the United States?",
+      "choices": ["George Washington", "John Adams", "Thomas Jefferson", "James Madison"],
+      "correctIndex": 0,
+      "difficulty": 1
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "categoryId": "science",
+  "categoryName": "Science",
+  "questionsPerRound": 5,
+  "questions": [
+    {
+      "id": "sci_001",
+      "text": "What gas do plants primarily absorb for photosynthesis?",
+      "choices": ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+      "correctIndex": 2,
+      "difficulty": 1
+    },
+    {
+      "id": "sci_002",
+      "text": "What is H2O commonly known as?",
+      "choices": ["Salt", "Water", "Hydrogen", "Ozone"],
+      "correctIndex": 1,
+      "difficulty": 1
+    }
+  ]
+}

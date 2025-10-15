@@ -1,0 +1,14 @@
+{
+  "categoryId": "sports",
+  "categoryName": "Sports",
+  "questionsPerRound": 5,
+  "questions": [
+    {
+      "id": "spo_001",
+      "text": "How many players are on a soccer team on the field?",
+      "choices": ["9", "10", "11", "12"],
+      "correctIndex": 2,
+      "difficulty": 1
+    }
+  ]
+}

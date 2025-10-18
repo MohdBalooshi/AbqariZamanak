@@ -6,17 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Boot.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/_Game/Scenes/Quiz.unity
-    guid: ae0b3c9b0f6831342ba6e3b9bfc0666c
-  - enabled: 1
-    path: Assets/_Game/Scenes/Achievements.unity
-    guid: ed7c49910a3064346ac585c87b4d6faf
-  - enabled: 1
-    path: Assets/_Game/Scenes/Settings.unity
-    guid: d5a24f8f7d5d9ca48bc1a8ce861621ca
+    path: Assets/_Game/Scenes/Boot.unity
+    guid: db2ada3a491c3b84e90af7a5ace9a057
   - enabled: 1
     path: Assets/_Game/Scenes/MainMenu.unity
     guid: 25c7dc83b53885749bf94918a959c2c6
@@ -26,6 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/Scenes/LevelSelect.unity
     guid: 888dab2d568144e4b87341176a4e4309
+  - enabled: 1
+    path: Assets/_Game/Scenes/Quiz.unity
+    guid: ae0b3c9b0f6831342ba6e3b9bfc0666c
+  - enabled: 1
+    path: Assets/_Game/Scenes/Achievements.unity
+    guid: ed7c49910a3064346ac585c87b4d6faf
+  - enabled: 1
+    path: Assets/_Game/Scenes/Settings.unity
+    guid: d5a24f8f7d5d9ca48bc1a8ce861621ca
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

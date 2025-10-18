@@ -9,25 +9,22 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button btnAchievements;
     [SerializeField] private Button btnSettings;
 
-    [Header("Panels (optional, if you use in-scene panels)")]
+    [Header("Panels (optional)")]
     [SerializeField] private GameObject achievementsPanel;
     [SerializeField] private GameObject settingsPanel;
 
-    [Header("Scene Names (if using separate scenes)")]
+    [Header("Scene Names")]
     [SerializeField] private string categorySceneName = "CategoryScene";
-    [SerializeField] private string achievementsSceneName = "";  // leave empty if using panel
-    [SerializeField] private string settingsSceneName = "";      // leave empty if using panel
+    [SerializeField] private string achievementsSceneName = "Achievements";  // leave empty if using panel
+    [SerializeField] private string settingsSceneName = "Settings";          // leave empty if using panel
 
     private void Awake()
     {
-        // Load saves if launched directly into this scene
-        if (SaveSystem.Data == null)
-            SaveSystem.Load();
+        if (SaveSystem.Data == null) SaveSystem.Load();
     }
 
     private void Start()
     {
-        // Safe subscriptions
         if (btnStart)
         {
             btnStart.onClick.RemoveAllListeners();
@@ -44,14 +41,12 @@ public class MainMenuController : MonoBehaviour
             btnSettings.onClick.AddListener(OnSettingsClicked);
         }
 
-        // Ensure optional panels are hidden by default
         if (achievementsPanel) achievementsPanel.SetActive(false);
         if (settingsPanel) settingsPanel.SetActive(false);
     }
 
     private void OnStartClicked()
     {
-        // Go to category selection → then LevelSelect → Quiz
         if (!string.IsNullOrEmpty(categorySceneName))
         {
             if (!Application.CanStreamedLevelBeLoaded(categorySceneName))
@@ -65,13 +60,7 @@ public class MainMenuController : MonoBehaviour
 
     private void OnAchievementsClicked()
     {
-        // If you use a panel in this same scene:
-        if (achievementsPanel)
-        {
-            achievementsPanel.SetActive(true);
-            return;
-        }
-        // Or a separate scene:
+        if (achievementsPanel) { achievementsPanel.SetActive(true); return; }
         if (!string.IsNullOrEmpty(achievementsSceneName))
         {
             if (!Application.CanStreamedLevelBeLoaded(achievementsSceneName))
@@ -85,13 +74,7 @@ public class MainMenuController : MonoBehaviour
 
     private void OnSettingsClicked()
     {
-        // If you use a panel in this same scene:
-        if (settingsPanel)
-        {
-            settingsPanel.SetActive(true);
-            return;
-        }
-        // Or a separate scene:
+        if (settingsPanel) { settingsPanel.SetActive(true); return; }
         if (!string.IsNullOrEmpty(settingsSceneName))
         {
             if (!Application.CanStreamedLevelBeLoaded(settingsSceneName))
@@ -103,7 +86,7 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    // Optional close hooks for panel X buttons
+    // Optional close hooks
     public void CloseAchievements() { if (achievementsPanel) achievementsPanel.SetActive(false); }
     public void CloseSettings()     { if (settingsPanel)     settingsPanel.SetActive(false); }
 }

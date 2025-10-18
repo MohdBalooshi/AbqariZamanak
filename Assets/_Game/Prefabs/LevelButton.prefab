@@ -225,6 +225,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelButtonHook
   label: {fileID: 8364722114956560335}
   lockIcon: {fileID: 4453343819023858945}
+  completedIcon: {fileID: 0}
+  quizSceneName: Quiz
+  requireContentToEnter: 1
 --- !u!225 &8479652543509288399
 CanvasGroup:
   m_ObjectHideFlags: 0

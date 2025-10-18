@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class QuizTimed : MonoBehaviour
+public class Quiz : MonoBehaviour
 {
     [Header("Top Bar")]
     [SerializeField] TMP_Text categoryTitle;
@@ -26,17 +26,23 @@ public class QuizTimed : MonoBehaviour
     [SerializeField] Button btnToMenu;
 
     [Header("Toast")]
-    [SerializeField] GameObject toastPanel;     // Root object (has CanvasGroup). Inactive by default.
+    [SerializeField] GameObject toastPanel;     // Root (CanvasGroup). Inactive by default.
     [SerializeField] TMP_Text toastText;        // Child TMP
     [SerializeField] float toastShowSeconds = 2.0f;
 
     [Header("Effects")]
-    [SerializeField] ConfettiBurst confetti;    // Optional confetti
+    [SerializeField] ConfettiBurst confetti;    // Optional
+
+    [Header("Round Rules")]
+    [SerializeField] int questionsPerRound = 10;
+    [SerializeField] int unlockThreshold = 8;   // score needed (>=) to unlock next level
 
     private CategoryBank bank;
+    private LevelBank level;
     private CategoryProgress progress;
-    private List<QuestionEntry> remaining;      // questions NOT seen yet
-    private int index = -1;                     // index into 'remaining'
+
+    private List<QuestionEntry> roundQuestions; // always exactly questionsPerRound (with padding)
+    private int index = -1;
     private int correctThisRound = 0;
 
     private float percentBefore = 0f;
@@ -49,37 +55,48 @@ public class QuizTimed : MonoBehaviour
 
         if (string.IsNullOrEmpty(QuizContext.SelectedCategoryId))
             QuizContext.SelectedCategoryId = "general";
+        if (QuizContext.SelectedLevelIndex < 1)
+            QuizContext.SelectedLevelIndex = 1;
 
         bank = QuestionDB.Banks[QuizContext.SelectedCategoryId];
-        categoryTitle.text = bank.categoryName;
+        level = bank.levels?.FirstOrDefault(l => l.levelIndex == QuizContext.SelectedLevelIndex);
+        if (level == null)
+        {
+            // Legacy support (no levels): treat whole bank as level 1
+            level = new LevelBank { levelIndex = 1, questions = bank.questions ?? new List<QuestionEntry>() };
+        }
 
-        // Subscribe to coins event; init display
+        if (categoryTitle) categoryTitle.text = $"{bank.categoryName} — Level {level.levelIndex}";
+
         SaveSystem.OnCoinsChanged += HandleCoinsChanged;
         HandleCoinsChanged(SaveSystem.Data.coins);
 
-        // Load/compute progress + percent BEFORE
         progress = SaveSystem.GetProgress(bank.categoryId);
-        percentBefore = SaveSystem.GetPercent(bank.categoryId, bank.questions != null ? bank.questions.Count : 0);
 
-        // Build remaining pool: exclude already-seen questions
-        remaining = (bank.questions ?? new List<QuestionEntry>())
-                    .Where(q => !progress.seenQuestionIds.Contains(q.id))
-                    .ToList();
+        int totalQs = TotalQuestionCount(bank);
+        percentBefore = SaveSystem.GetPercent(bank.categoryId, totalQs);
 
-        // Shuffle remaining so the order is fresh each time
-        Shuffle(remaining);
+        // If level already fully complete, show message and bounce out
+        if (SaveSystem.IsLevelComplete(bank.categoryId, level.levelIndex))
+        {
+            EndRoundAlreadyComplete();
+            return;
+        }
+
+        // Build a 10-question round from "not-yet-correct", padded with already-correct if needed
+        roundQuestions = BuildRound(level, progress, questionsPerRound);
+        Shuffle(roundQuestions);
+
+        if (roundQuestions.Count == 0)
+        {
+            EndRoundAlreadyComplete();
+            return;
+        }
 
         if (btnToMenu) btnToMenu.onClick.AddListener(() =>
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"));
 
         if (toastPanel) toastPanel.SetActive(false);
-
-        // If nothing left, end immediately with a friendly message
-        if (remaining.Count == 0)
-        {
-            EndRoundNoNewQuestions();
-            return;
-        }
 
         NextQuestion();
     }
@@ -97,17 +114,15 @@ public class QuizTimed : MonoBehaviour
     void NextQuestion()
     {
         index++;
-        int maxThisRound = Mathf.Min(bank.questionsPerRound, remaining.Count);
-
-        if (index >= maxThisRound)
+        if (index >= roundQuestions.Count)
         {
             EndRound();
             return;
         }
 
-        var q = remaining[index];
+        var q = roundQuestions[index];
         questionText.text = q.text;
-        if (questionCounter) questionCounter.text = $"{index + 1}/{maxThisRound}";
+        if (questionCounter) questionCounter.text = $"{index + 1}/{roundQuestions.Count}";
 
         for (int i = 0; i < answerButtons.Count; i++)
         {
@@ -123,30 +138,34 @@ public class QuizTimed : MonoBehaviour
 
         if (timer)
         {
-            timer.OnTimeUp = () => OnAnswer(-1); // time-out counts as wrong but still 'seen'
+            timer.OnTimeUp = () => OnAnswer(-1);
             timer.ResetTimer();
         }
     }
 
     void OnAnswer(int chosenIndex)
     {
-        var q = remaining[index];
-        bool correct = (chosenIndex == q.correctIndex);
+        var q = roundQuestions[index];
+        bool correctNow = (chosenIndex == q.correctIndex);
 
-        // Mark progress: this question has now been SEEN
-        progress.seenQuestionIds.Add(q.id);
+        // Always mark seen
+        SaveSystem.MarkSeen(bank.categoryId, q.id, autoSave: false);
 
-        if (correct)
+        // Mark correct only if correct (keeps cumulative completion)
+        if (correctNow)
         {
             correctThisRound++;
-            progress.correctQuestionIds.Add(q.id);
-            SaveSystem.AddCoins(coinsPerCorrect); // saves + notifies listeners
+            SaveSystem.MarkCorrect(bank.categoryId, q.id, autoSave: false);
+            SaveSystem.AddCoins(coinsPerCorrect); // this saves & notifies
+        }
+        else
+        {
+            // if you want to do something on wrong answers, you can log here
         }
 
-        // Persist progress after each question (seen/correct)
+        // Persist seen/correct changes (coins already saved inside AddCoins)
         SaveSystem.Save();
 
-        // Disable buttons to avoid double-clicks
         foreach (var b in answerButtons) b.interactable = false;
 
         NextQuestion();
@@ -154,50 +173,63 @@ public class QuizTimed : MonoBehaviour
 
     void EndRound()
     {
-        float totalQs = (bank.questions != null) ? bank.questions.Count : 0f;
-        float percentAfter = SaveSystem.GetPercent(bank.categoryId, (int)totalQs);
+        // Check if level is now fully complete (all 10 correct at least once)
+        bool levelNowComplete = SaveSystem.IsLevelComplete(bank.categoryId, level.levelIndex);
+
+        // Unlock next level if score reached threshold (>= unlockThreshold)
+        if (correctThisRound >= unlockThreshold)
+        {
+            // This unlock doesn’t require full completion; we advance at least to next level
+            SaveSystem.ForceUnlockUpTo(bank.categoryId, level.levelIndex + 1);
+        }
+
+        // Update overall percent for toast
+        int totalQs = TotalQuestionCount(bank);
+        float percentAfter = SaveSystem.GetPercent(bank.categoryId, totalQs);
         improvedThisRound = percentAfter > percentBefore + 0.0001f;
 
+        // UI results
         if (resultsPanel)
         {
             resultsPanel.SetActive(true);
             if (resultsText)
             {
-                resultsText.text = $"Correct Answers: {correctThisRound}/{Mathf.Min(bank.questionsPerRound, remaining.Count)}";
+                resultsText.text =
+                    $"Score this round: {correctThisRound}/{questionsPerRound}\n" +
+                    (levelNowComplete
+                        ? $"Level {level.levelIndex}: COMPLETED ✅"
+                        : $"Level {level.levelIndex}: keep going for 100%");
+
+                if (correctThisRound >= unlockThreshold)
+                    resultsText.text += $"\nNext level unlocked!";
+
                 if (improvedThisRound)
                     resultsText.text += $"\nNew best completion: {percentAfter:0}%";
             }
 
-            if (improvedThisRound && toastPanel && toastText)
+            if ((levelNowComplete || improvedThisRound) && toastPanel && toastText)
             {
-                toastText.text = $"New best completion: {percentAfter:0}% 🎉";
+                toastText.text = levelNowComplete
+                    ? $"Level {level.levelIndex} 100% complete! 🎉"
+                    : $"New best completion: {percentAfter:0}% 🎉";
+
                 if (confetti) confetti.Play();
                 StartCoroutine(ShowToast());
             }
         }
         else
         {
-            if (improvedThisRound && toastPanel && toastText)
-            {
-                toastText.text = $"New best completion: {percentAfter:0}% 🎉";
-                if (confetti) confetti.Play();
-                StartCoroutine(ShowToastThenMenu());
-            }
-            else
-            {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
-            }
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
         }
     }
 
-    // When there are no new questions left in this category
-    void EndRoundNoNewQuestions()
+    void EndRoundAlreadyComplete()
     {
         if (resultsPanel)
         {
             resultsPanel.SetActive(true);
             if (resultsText)
-                resultsText.text = "You've answered all available questions in this category!\nCheck back later for new ones.";
+                resultsText.text = $"Level {level.levelIndex} is already 100% complete.\nChoose another level.";
         }
         else
         {
@@ -211,7 +243,6 @@ public class QuizTimed : MonoBehaviour
         var cg = toastPanel.GetComponent<CanvasGroup>();
         if (!cg) cg = toastPanel.AddComponent<CanvasGroup>();
 
-        // Fade in
         for (float t = 0; t < 0.2f; t += Time.unscaledDeltaTime)
         {
             cg.alpha = Mathf.Lerp(0f, 1f, t / 0.2f);
@@ -219,10 +250,8 @@ public class QuizTimed : MonoBehaviour
         }
         cg.alpha = 1f;
 
-        // Hold
         yield return new WaitForSecondsRealtime(toastShowSeconds);
 
-        // Fade out
         for (float t = 0; t < 0.3f; t += Time.unscaledDeltaTime)
         {
             cg.alpha = Mathf.Lerp(1f, 0f, t / 0.3f);
@@ -232,13 +261,51 @@ public class QuizTimed : MonoBehaviour
         toastPanel.SetActive(false);
     }
 
-    IEnumerator ShowToastThenMenu()
+    static List<QuestionEntry> BuildRound(LevelBank level, CategoryProgress prog, int targetCount)
     {
-        yield return ShowToast();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        var all = level.questions ?? new List<QuestionEntry>();
+
+        // MUST include all not-yet-correct questions first (these are the ones we want the player to clear)
+        var notYetCorrect = all.Where(q => !prog.correctQuestionIds.Contains(q.id)).ToList();
+
+        // Start with not-yet-correct
+        var round = new List<QuestionEntry>(notYetCorrect);
+
+        // If fewer than targetCount, pad with already-correct items (random, no duplicates)
+        if (round.Count < targetCount)
+        {
+            var alreadyCorrect = all.Where(q => prog.correctQuestionIds.Contains(q.id)).ToList();
+            Shuffle(alreadyCorrect);
+
+            foreach (var q in alreadyCorrect)
+            {
+                if (round.Count >= targetCount) break;
+                if (!round.Any(x => x.id == q.id)) round.Add(q);
+            }
+        }
+
+        // If more than targetCount, randomly cut down (player has lots to clear; we’ll take 10)
+        if (round.Count > targetCount)
+        {
+            Shuffle(round);
+            round = round.Take(targetCount).ToList();
+        }
+
+        return round;
     }
 
-    // Fisher–Yates shuffle
+    static int TotalQuestionCount(CategoryBank bank)
+    {
+        if (bank.levels != null && bank.levels.Count > 0)
+        {
+            int total = 0;
+            foreach (var l in bank.levels)
+                total += l.questions != null ? l.questions.Count : 0;
+            return total;
+        }
+        return bank.questions != null ? bank.questions.Count : 0;
+    }
+
     static void Shuffle<T>(IList<T> list)
     {
         for (int i = list.Count - 1; i > 0; i--)

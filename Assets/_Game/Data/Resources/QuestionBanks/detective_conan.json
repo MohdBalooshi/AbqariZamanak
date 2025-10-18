@@ -1,0 +1,17 @@
+{
+  "categoryId": "detective_conan",
+  "categoryName": "Detective Conan",
+  "questionsPerRound": 5,
+  "questions": [
+    { "id": "dc_001", "text": "What is Conan Edogawa’s real name?", "choices": ["Kaito Kuroba", "Shinichi Kudo", "Heiji Hattori", "Kogoro Mouri"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "dc_002", "text": "Which organization shrank Shinichi?", "choices": ["Black Organization", "Phantom Troupe", "Port Mafia", "Syndicate X"], "correctIndex": 0, "difficulty": 1 },
+    { "id": "dc_003", "text": "What is the alias of the thief who often appears in crossovers?", "choices": ["Kid Phantom", "Kaito Kid", "Silver Thief", "Shadow Phantom"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "dc_004", "text": "What is the relationship between Ran Mouri and Kogoro Mouri?", "choices": ["Siblings", "Cousins", "Father and daughter", "Friends"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "dc_005", "text": "Which scientist created gadgets for Conan?", "choices": ["Dr. Agasa", "Prof. Hirota", "Dr. Miyano", "Prof. Araide"], "correctIndex": 0, "difficulty": 2 },
+    { "id": "dc_006", "text": "What color is commonly associated with the Black Organization's attire?", "choices": ["White", "Red", "Black", "Gray"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "dc_007", "text": "Ai Haibara’s former codename was?", "choices": ["Vodka", "Vermouth", "Sherry", "Gin"], "correctIndex": 2, "difficulty": 2 },
+    { "id": "dc_008", "text": "Conan often knocks out which character to solve cases?", "choices": ["Heiji", "Kogoro", "Megure", "Takagi"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "dc_009", "text": "What device does Conan use to change his voice?", "choices": ["Voice Modulator Bowtie", "Smartwatch", "Pen Recorder", "Shoe Amplifier"], "correctIndex": 0, "difficulty": 1 },
+    { "id": "dc_010", "text": "Ran practices which martial art?", "choices": ["Karate", "Judo", "Aikido", "Kendo"], "correctIndex": 0, "difficulty": 1 }
+  ]
+}

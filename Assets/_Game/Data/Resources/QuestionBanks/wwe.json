@@ -1,0 +1,17 @@
+{
+  "categoryId": "wwe",
+  "categoryName": "WWE",
+  "questionsPerRound": 5,
+  "questions": [
+    { "id": "wwe_001", "text": "What does WWE stand for?", "choices": ["World Wrestling Elite", "World Wrestling Entertainment", "Worldwide Wrestling Events", "World Wide Entertainment"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "wwe_002", "text": "Which wrestler is known as 'The Undertaker'?", "choices": ["Kane", "John Cena", "Mark Calaway", "Triple H"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "wwe_003", "text": "Who is famous for the catchphrase 'You can't see me'?", "choices": ["The Rock", "John Cena", "Hulk Hogan", "Roman Reigns"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "wwe_004", "text": "Which event is considered WWE’s biggest show of the year?", "choices": ["SummerSlam", "Royal Rumble", "Survivor Series", "WrestleMania"], "correctIndex": 3, "difficulty": 1 },
+    { "id": "wwe_005", "text": "What is the name of The Rock’s finishing move?", "choices": ["RKO", "Pedigree", "Rock Bottom", "Spear"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "wwe_006", "text": "Which wrestler is known as 'The Rated-R Superstar'?", "choices": ["Edge", "Orton", "Batista", "CM Punk"], "correctIndex": 0, "difficulty": 2 },
+    { "id": "wwe_007", "text": "What is the Royal Rumble match's main feature?", "choices": ["Ladders", "Elimination Chamber", "Timed entrant over-the-top eliminations", "Iron Man rules"], "correctIndex": 2, "difficulty": 2 },
+    { "id": "wwe_008", "text": "Who is known for the 'Stone Cold Stunner'?", "choices": ["Stone Cold Steve Austin", "Shawn Michaels", "Brock Lesnar", "Kurt Angle"], "correctIndex": 0, "difficulty": 1 },
+    { "id": "wwe_009", "text": "Which championship is typically the top men's title on Raw/SmackDown eras?", "choices": ["Intercontinental", "United States", "Tag Team", "World/Universal"], "correctIndex": 3, "difficulty": 2 },
+    { "id": "wwe_010", "text": "Who often says 'Acknowledge me' as part of his persona?", "choices": ["Seth Rollins", "Roman Reigns", "AJ Styles", "Drew McIntyre"], "correctIndex": 1, "difficulty": 2 }
+  ]
+}

@@ -3,19 +3,15 @@
   "categoryName": "Science",
   "questionsPerRound": 5,
   "questions": [
-    {
-      "id": "sci_001",
-      "text": "What gas do plants primarily absorb for photosynthesis?",
-      "choices": ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
-      "correctIndex": 2,
-      "difficulty": 1
-    },
-    {
-      "id": "sci_002",
-      "text": "What is H2O commonly known as?",
-      "choices": ["Salt", "Water", "Hydrogen", "Ozone"],
-      "correctIndex": 1,
-      "difficulty": 1
-    }
+    { "id": "sc_001", "text": "What gas do plants absorb during photosynthesis?", "choices": ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "sc_002", "text": "What is the center of an atom called?", "choices": ["Proton", "Neutron", "Nucleus", "Electron"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "sc_003", "text": "Which planet has the most moons?", "choices": ["Jupiter", "Saturn", "Uranus", "Neptune"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "sc_004", "text": "What part of the human body controls balance?", "choices": ["Heart", "Brain", "Inner ear", "Spine"], "correctIndex": 2, "difficulty": 2 },
+    { "id": "sc_005", "text": "What force keeps us on the ground?", "choices": ["Magnetism", "Gravity", "Friction", "Pressure"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "sc_006", "text": "Which organ purifies blood?", "choices": ["Heart", "Kidney", "Liver", "Lung"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "sc_007", "text": "What is the main gas in Earth’s atmosphere?", "choices": ["Oxygen", "Carbon dioxide", "Nitrogen", "Argon"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "sc_008", "text": "How many bones are in an adult human body?", "choices": ["206", "210", "208", "201"], "correctIndex": 0, "difficulty": 1 },
+    { "id": "sc_009", "text": "Which vitamin do we get from sunlight?", "choices": ["A", "C", "D", "E"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "sc_010", "text": "Water boils at what temperature (°C)?", "choices": ["50", "80", "90", "100"], "correctIndex": 3, "difficulty": 1 }
   ]
 }

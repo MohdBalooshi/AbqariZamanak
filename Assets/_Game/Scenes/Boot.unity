@@ -460,6 +460,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f14464ce0c9984598f7182c8e4765e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnlineGate
+  nextScene: MainMenu
+  requireInternet: 0
+  minSplashSeconds: 0.75
 --- !u!4 &1076121376
 Transform:
   m_ObjectHideFlags: 0
@@ -652,8 +655,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0027466, y: -0.0046692}
-  m_SizeDelta: {x: 196.48, y: 183.87}
+  m_AnchoredPosition: {x: -34.70569, y: -13.257}
+  m_SizeDelta: {x: 310.485, y: 283.926}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1354766947
 GameObject:
@@ -778,7 +781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21, y: 244}
+  m_AnchoredPosition: {x: 32, y: 413}
   m_SizeDelta: {x: 456.215, y: 462}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1753553505

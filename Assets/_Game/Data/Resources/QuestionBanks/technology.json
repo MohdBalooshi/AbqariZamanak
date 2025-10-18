@@ -1,0 +1,17 @@
+{
+  "categoryId": "technology",
+  "categoryName": "Technology",
+  "questionsPerRound": 5,
+  "questions": [
+    { "id": "tech_001", "text": "What does CPU stand for?", "choices": ["Central Process Unit", "Central Processing Unit", "Computer Processing Utility", "Core Processing Unit"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "tech_002", "text": "Which company developed the Android operating system?", "choices": ["Apple", "Microsoft", "Google", "IBM"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "tech_003", "text": "What does 'HTTP' stand for?", "choices": ["Hyperlink Transfer Text Protocol", "HyperText Transfer Protocol", "High Transfer Text Protocol", "Hyper Transfer Tooltip Protocol"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "tech_004", "text": "Which storage is non-volatile?", "choices": ["RAM", "Cache", "SSD", "Registers"], "correctIndex": 2, "difficulty": 2 },
+    { "id": "tech_005", "text": "What is the brain of the computer?", "choices": ["GPU", "CPU", "Motherboard", "Power Supply"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "tech_006", "text": "Which number system is used by computers internally?", "choices": ["Decimal", "Binary", "Octal", "Hexadecimal"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "tech_007", "text": "What does 'AI' stand for?", "choices": ["Artificial Intelligence", "Automated Input", "Analog Interface", "Advanced Integration"], "correctIndex": 0, "difficulty": 1 },
+    { "id": "tech_008", "text": "Which device connects a local network to the internet?", "choices": ["Switch", "Router", "Hub", "Repeater"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "tech_009", "text": "What does 'GPU' primarily accelerate?", "choices": ["Networking", "Graphics rendering", "Disk access", "Power management"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "tech_010", "text": "Which file format is commonly used for lossless image compression?", "choices": ["JPG", "PNG", "GIF", "BMP"], "correctIndex": 1, "difficulty": 2 }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "categoryId": "geography",
+  "categoryName": "Geography",
+  "questionsPerRound": 5,
+  "questions": [
+    { "id": "geo_001", "text": "Which river flows through Egypt?", "choices": ["Amazon", "Nile", "Tigris", "Euphrates"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "geo_002", "text": "What is the largest desert in the world?", "choices": ["Gobi", "Sahara", "Kalahari", "Arctic"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "geo_003", "text": "Which country has the most islands?", "choices": ["Philippines", "Indonesia", "Sweden", "Japan"], "correctIndex": 2, "difficulty": 2 },
+    { "id": "geo_004", "text": "What is the capital of Canada?", "choices": ["Toronto", "Montreal", "Ottawa", "Vancouver"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "geo_005", "text": "Mount Everest lies between which two countries?", "choices": ["China & India", "Nepal & China", "India & Pakistan", "Nepal & Bhutan"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "geo_006", "text": "Which continent is the driest?", "choices": ["Asia", "Africa", "Antarctica", "Australia"], "correctIndex": 2, "difficulty": 2 },
+    { "id": "geo_007", "text": "What is the smallest country in the world?", "choices": ["Monaco", "Malta", "Vatican City", "Andorra"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "geo_008", "text": "Which ocean lies on the east of Africa?", "choices": ["Atlantic", "Indian", "Pacific", "Arctic"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "geo_009", "text": "What is the currency of Japan?", "choices": ["Yuan", "Yen", "Won", "Dollar"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "geo_010", "text": "Which city is nicknamed \"The Big Apple\"?", "choices": ["Los Angeles", "Chicago", "Miami", "New York"], "correctIndex": 3, "difficulty": 1 }
+  ]
+}

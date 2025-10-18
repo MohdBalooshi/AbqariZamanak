@@ -1,0 +1,17 @@
+{
+  "categoryId": "logic_iq",
+  "categoryName": "Logic & IQ",
+  "questionsPerRound": 5,
+  "questions": [
+    { "id": "iq_001", "text": "What number comes next: 2, 4, 8, 16, __?", "choices": ["18", "24", "30", "32"], "correctIndex": 3, "difficulty": 1 },
+    { "id": "iq_002", "text": "If ALL SLY are FLY and SOME FLY are DRY, which must be true?", "choices": ["Some SLY are DRY", "No SLY are DRY", "All DRY are SLY", "None must be true"], "correctIndex": 3, "difficulty": 3 },
+    { "id": "iq_003", "text": "Find the odd one out: Square, Triangle, Circle, Rectangle", "choices": ["Square", "Triangle", "Circle", "Rectangle"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "iq_004", "text": "Which is heavier: 1 kg of iron or 1 kg of cotton?", "choices": ["Iron", "Cotton", "Same weight", "Can't be determined"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "iq_005", "text": "Complete the pattern: A1, C2, E3, G4, __", "choices": ["I5", "H5", "J6", "I4"], "correctIndex": 0, "difficulty": 2 },
+    { "id": "iq_006", "text": "A clock shows 3:15. What is the angle between the hour and minute hands?", "choices": ["0°", "7.5°", "15°", "90°"], "correctIndex": 1, "difficulty": 3 },
+    { "id": "iq_007", "text": "If 5 machines make 5 gadgets in 5 minutes, how long for 100 machines to make 100 gadgets?", "choices": ["1 minute", "5 minutes", "20 minutes", "100 minutes"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "iq_008", "text": "Which number is missing: 1, 1, 2, 3, 5, 8, __", "choices": ["11", "12", "13", "15"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "iq_009", "text": "If TODAY is two days before Friday, which day is TOMORROW?", "choices": ["Wednesday", "Thursday", "Friday", "Saturday"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "iq_010", "text": "You see me once in a minute, twice in a moment, never in a thousand years. What am I?", "choices": ["The letter M", "Time", "Memory", "A second"], "correctIndex": 0, "difficulty": 3 }
+  ]
+}

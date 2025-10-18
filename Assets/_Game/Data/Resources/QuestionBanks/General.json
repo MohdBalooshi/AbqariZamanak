@@ -3,19 +3,15 @@
   "categoryName": "General Knowledge",
   "questionsPerRound": 5,
   "questions": [
-    {
-      "id": "gk_001",
-      "text": "What is the capital of France?",
-      "choices": ["Paris", "Lyon", "Marseille", "Nice"],
-      "correctIndex": 0,
-      "difficulty": 1
-    },
-    {
-      "id": "gk_002",
-      "text": "How many continents are there on Earth?",
-      "choices": ["5", "6", "7", "8"],
-      "correctIndex": 2,
-      "difficulty": 1
-    }
+    { "id": "gk_001", "text": "What is the capital of Japan?", "choices": ["Seoul", "Beijing", "Tokyo", "Osaka"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "gk_002", "text": "Which planet is known as the Red Planet?", "choices": ["Venus", "Mars", "Jupiter", "Saturn"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "gk_003", "text": "How many continents are there in the world?", "choices": ["5", "6", "7", "8"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "gk_004", "text": "Who painted the Mona Lisa?", "choices": ["Van Gogh", "Da Vinci", "Picasso", "Michelangelo"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "gk_005", "text": "What is the largest ocean on Earth?", "choices": ["Indian", "Atlantic", "Pacific", "Arctic"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "gk_006", "text": "Which language has the most native speakers?", "choices": ["English", "Mandarin", "Spanish", "Arabic"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "gk_007", "text": "What is the fastest land animal?", "choices": ["Tiger", "Cheetah", "Horse", "Gazelle"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "gk_008", "text": "What is H₂O commonly known as?", "choices": ["Salt", "Water", "Hydrogen", "Oxygen"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "gk_009", "text": "What is the square root of 64?", "choices": ["6", "7", "8", "9"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "gk_010", "text": "How many colors are in a rainbow?", "choices": ["6", "7", "8", "9"], "correctIndex": 1, "difficulty": 1 }
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "categoryId": "formula1",
+  "categoryName": "Formula 1",
+  "questionsPerRound": 5,
+  "questions": [
+    { "id": "f1_001", "text": "Which flag ends a Formula 1 race?", "choices": ["Green", "Red", "Yellow", "Checkered"], "correctIndex": 3, "difficulty": 1 },
+    { "id": "f1_002", "text": "What does DRS stand for in F1?", "choices": ["Drag Reduction System", "Downforce Ratio System", "Drive Reaction Setting", "Dynamic Rear Spoiler"], "correctIndex": 0, "difficulty": 2 },
+    { "id": "f1_003", "text": "How many drivers are on the grid at the start of a modern F1 race?", "choices": ["18", "20", "22", "24"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "f1_004", "text": "Which team’s color is traditionally Ferrari red?", "choices": ["Mercedes", "Ferrari", "McLaren", "Red Bull"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "f1_005", "text": "What is a 'power unit' mainly composed of?", "choices": ["Engine + ERS", "Gearbox only", "Battery only", "Turbo only"], "correctIndex": 0, "difficulty": 2 },
+    { "id": "f1_006", "text": "Which circuit hosts the Monaco Grand Prix?", "choices": ["Monza", "Monte Carlo", "Silverstone", "Spa"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "f1_007", "text": "What does a yellow flag generally indicate?", "choices": ["Race end", "Hazard/slow down", "Overtaking allowed", "Pit lane closed"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "f1_008", "text": "Where do teams perform pit stops?", "choices": ["Starting grid", "Pit lane", "Parc fermé", "Run-off area"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "f1_009", "text": "What is 'pole position'?", "choices": ["Fastest lap in race", "First on the grid after qualifying", "Winner of last race", "Best pit crew award"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "f1_010", "text": "Which tire color typically represents the softest compound (Pirelli era)?", "choices": ["Red", "Yellow", "White", "Blue"], "correctIndex": 0, "difficulty": 2 }
+  ]
+}

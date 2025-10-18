@@ -1,0 +1,17 @@
+{
+  "categoryId": "movies",
+  "categoryName": "Movies",
+  "questionsPerRound": 5,
+  "questions": [
+    { "id": "mv_001", "text": "Who played Iron Man in the Marvel movies?", "choices": ["Chris Evans", "Robert Downey Jr.", "Chris Hemsworth", "Tom Holland"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "mv_002", "text": "Which movie features the quote \"I'll be back\"?", "choices": ["Die Hard", "The Terminator", "Rambo", "Predator"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "mv_003", "text": "Who directed \"Jurassic Park\" (1993)?", "choices": ["James Cameron", "Steven Spielberg", "George Lucas", "Ridley Scott"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "mv_004", "text": "Which film features the song \"Let It Go\"?", "choices": ["Tangled", "Frozen", "Moana", "Encanto"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "mv_005", "text": "Who played Jack in Titanic?", "choices": ["Matt Damon", "Brad Pitt", "Leonardo DiCaprio", "Tom Cruise"], "correctIndex": 2, "difficulty": 1 },
+    { "id": "mv_006", "text": "Which franchise features the character Luke Skywalker?", "choices": ["Star Trek", "Star Wars", "The Matrix", "Alien"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "mv_007", "text": "Which Pixar movie is about emotions inside a girl's mind?", "choices": ["Soul", "Inside Out", "Up", "Coco"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "mv_008", "text": "Which film introduced the character \"The Joker\" played by Heath Ledger?", "choices": ["Batman Begins", "The Dark Knight", "The Dark Knight Rises", "Joker"], "correctIndex": 1, "difficulty": 2 },
+    { "id": "mv_009", "text": "In which movie does the character Neo appear?", "choices": ["Blade Runner", "The Matrix", "Minority Report", "Tron"], "correctIndex": 1, "difficulty": 1 },
+    { "id": "mv_010", "text": "Which director is known for mind-bending films like \"Inception\" and \"Tenet\"?", "choices": ["Christopher Nolan", "Denis Villeneuve", "Quentin Tarantino", "Guy Ritchie"], "correctIndex": 0, "difficulty": 2 }
+  ]
+}

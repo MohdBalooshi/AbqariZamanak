@@ -1,17 +1,81 @@
 {
   "categoryId": "detective_conan",
   "categoryName": "Detective Conan",
-  "questionsPerRound": 5,
-  "questions": [
-    { "id": "dc_001", "text": "What is Conan Edogawa’s real name?", "choices": ["Kaito Kuroba", "Shinichi Kudo", "Heiji Hattori", "Kogoro Mouri"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "dc_002", "text": "Which organization shrank Shinichi?", "choices": ["Black Organization", "Phantom Troupe", "Port Mafia", "Syndicate X"], "correctIndex": 0, "difficulty": 1 },
-    { "id": "dc_003", "text": "What is the alias of the thief who often appears in crossovers?", "choices": ["Kid Phantom", "Kaito Kid", "Silver Thief", "Shadow Phantom"], "correctIndex": 1, "difficulty": 2 },
-    { "id": "dc_004", "text": "What is the relationship between Ran Mouri and Kogoro Mouri?", "choices": ["Siblings", "Cousins", "Father and daughter", "Friends"], "correctIndex": 2, "difficulty": 1 },
-    { "id": "dc_005", "text": "Which scientist created gadgets for Conan?", "choices": ["Dr. Agasa", "Prof. Hirota", "Dr. Miyano", "Prof. Araide"], "correctIndex": 0, "difficulty": 2 },
-    { "id": "dc_006", "text": "What color is commonly associated with the Black Organization's attire?", "choices": ["White", "Red", "Black", "Gray"], "correctIndex": 2, "difficulty": 1 },
-    { "id": "dc_007", "text": "Ai Haibara’s former codename was?", "choices": ["Vodka", "Vermouth", "Sherry", "Gin"], "correctIndex": 2, "difficulty": 2 },
-    { "id": "dc_008", "text": "Conan often knocks out which character to solve cases?", "choices": ["Heiji", "Kogoro", "Megure", "Takagi"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "dc_009", "text": "What device does Conan use to change his voice?", "choices": ["Voice Modulator Bowtie", "Smartwatch", "Pen Recorder", "Shoe Amplifier"], "correctIndex": 0, "difficulty": 1 },
-    { "id": "dc_010", "text": "Ran practices which martial art?", "choices": ["Karate", "Judo", "Aikido", "Kendo"], "correctIndex": 0, "difficulty": 1 }
+  "levels": [
+    {
+      "levelIndex": 1,
+      "questions": [
+        { "id": "dc_1_001", "text": "What is Conan Edogawa’s real name?", "choices": ["Shinichi Kudo", "Kaito Kuroba", "Heiji Hattori", "Toichi Kuroba"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_1_002", "text": "Who created the Detective Conan manga?", "choices": ["Masashi Kishimoto", "Gosho Aoyama", "Eiichiro Oda", "Tite Kubo"], "correctIndex": 1, "difficulty": 1 },
+        { "id": "dc_1_003", "text": "Which organization turned Shinichi into a child?", "choices": ["The Black Organization", "The Red Circle", "The Dark Syndicate", "The Shadow Group"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_1_004", "text": "What is the poison that shrank Shinichi?", "choices": ["APTX 4869", "RX 78", "VX 300", "PX 999"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_1_005", "text": "What is Ran Mouri’s father’s profession?", "choices": ["Police officer", "Private detective", "Journalist", "Doctor"], "correctIndex": 1, "difficulty": 1 },
+        { "id": "dc_1_006", "text": "What sport is Ran Mouri best at?", "choices": ["Kendo", "Karate", "Judo", "Boxing"], "correctIndex": 1, "difficulty": 1 },
+        { "id": "dc_1_007", "text": "What is the name of Conan’s elementary school?", "choices": ["Teitan Elementary", "Ekoda Elementary", "Haido Elementary", "Beika Elementary"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_1_008", "text": "What gadget does Professor Agasa give Conan to track people?", "choices": ["Wristwatch dart gun", "Tracking glasses", "Voice-changing bowtie", "Solar skateboard"], "correctIndex": 1, "difficulty": 1 },
+        { "id": "dc_1_009", "text": "Which detective does Kogoro Mouri admire?", "choices": ["Hercule Poirot", "Ellery Queen", "Sherlock Holmes", "Columbo"], "correctIndex": 2, "difficulty": 1 },
+        { "id": "dc_1_010", "text": "What is Ai Haibara’s former identity?", "choices": ["Shiho Miyano", "Yukiko Kudo", "Eri Kisaki", "Jodie Starling"], "correctIndex": 0, "difficulty": 1 }
+      ]
+    },
+    {
+      "levelIndex": 2,
+      "questions": [
+        { "id": "dc_2_001", "text": "What is the name of the Black Organization’s leader (codename)?", "choices": ["Rum", "Gin", "Bourbon", "Anokata"], "correctIndex": 3, "difficulty": 2 },
+        { "id": "dc_2_002", "text": "Which of the following is Conan’s childhood friend?", "choices": ["Ayumi Yoshida", "Ran Mouri", "Sonoko Suzuki", "Ai Haibara"], "correctIndex": 1, "difficulty": 1 },
+        { "id": "dc_2_003", "text": "What does Conan use to disguise his voice?", "choices": ["Voice-changing bowtie", "Smartwatch mic", "Phone recorder", "Earphone communicator"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_2_004", "text": "What is the codename of the Black Organization member who gave Conan the poison?", "choices": ["Vodka", "Gin", "Rum", "Bourbon"], "correctIndex": 1, "difficulty": 2 },
+        { "id": "dc_2_005", "text": "Who is the police detective from Osaka often seen with Conan?", "choices": ["Heiji Hattori", "Takagi Wataru", "Megure Juzo", "Yamamura Misao"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_2_006", "text": "Who is Sonoko Suzuki’s crush?", "choices": ["Makoto Kyogoku", "Kaito Kuroba", "Shinichi Kudo", "Heiji Hattori"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_2_007", "text": "Which gadget helps Conan escape quickly?", "choices": ["Turbo skateboard", "Jet shoes", "Parachute jacket", "Invisible cloak"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_2_008", "text": "What is the color of Gin’s Porsche?", "choices": ["Black", "Silver", "White", "Red"], "correctIndex": 1, "difficulty": 2 },
+        { "id": "dc_2_009", "text": "Who created all of Conan’s gadgets?", "choices": ["Professor Agasa", "Dr. Araide", "Kaito Kuroba", "Inspector Megure"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_2_010", "text": "Which animal often represents Detective Conan’s logo?", "choices": ["Deer", "Rabbit", "Silhouette Boy", "Magnifying Glass"], "correctIndex": 3, "difficulty": 1 }
+      ]
+    },
+    {
+      "levelIndex": 3,
+      "questions": [
+        { "id": "dc_3_001", "text": "What is Kaito Kid’s real name?", "choices": ["Kaito Kuroba", "Shinichi Kudo", "Saguru Hakuba", "Toichi Kuroba"], "correctIndex": 0, "difficulty": 2 },
+        { "id": "dc_3_002", "text": "Which police inspector always wears a brown coat?", "choices": ["Megure Juzo", "Takagi Wataru", "Sato Miwako", "Yokomizo"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_3_003", "text": "Which FBI agent assists Conan?", "choices": ["Jodie Starling", "James Black", "Andre Camel", "All of them"], "correctIndex": 3, "difficulty": 2 },
+        { "id": "dc_3_004", "text": "Where did Shinichi first encounter Gin and Vodka?", "choices": ["Tropical Land", "Beika Hotel", "Ekoda Bridge", "Teitan Stadium"], "correctIndex": 0, "difficulty": 2 },
+        { "id": "dc_3_005", "text": "Which organization does Bourbon secretly work for?", "choices": ["Public Security Bureau", "CIA", "FBI", "Interpol"], "correctIndex": 0, "difficulty": 3 },
+        { "id": "dc_3_006", "text": "What’s Ai Haibara’s codename in the Black Organization?", "choices": ["Sherry", "Vermouth", "Kir", "Rum"], "correctIndex": 0, "difficulty": 2 },
+        { "id": "dc_3_007", "text": "Who is Eri Kisaki married to?", "choices": ["Kogoro Mouri", "Megure Juzo", "Professor Agasa", "Yusaku Kudo"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_3_008", "text": "What is Conan’s most famous deduction phrase?", "choices": ["Case closed!", "There’s only one truth!", "Mystery solved!", "Elementary!"], "correctIndex": 1, "difficulty": 1 },
+        { "id": "dc_3_009", "text": "Who is Ran’s best friend?", "choices": ["Sonoko Suzuki", "Ai Haibara", "Ayumi Yoshida", "Yoko Okino"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_3_010", "text": "What is Shinichi’s father’s profession?", "choices": ["Detective", "Writer", "Police Chief", "Lawyer"], "correctIndex": 1, "difficulty": 1 }
+      ]
+    },
+    {
+      "levelIndex": 4,
+      "questions": [
+        { "id": "dc_4_001", "text": "Which country does Heiji Hattori live in?", "choices": ["Japan - Osaka", "United States", "England", "France"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_4_002", "text": "Who is Rum according to the manga revelations?", "choices": ["Hyoue Kuroda", "Kanenori Wakita", "Rumi Wakasa", "All of the above suspects"], "correctIndex": 3, "difficulty": 3 },
+        { "id": "dc_4_003", "text": "What is Vermouth’s real name?", "choices": ["Chris Vineyard", "Elena Miyano", "Jodie Starling", "Kirsten Taylor"], "correctIndex": 0, "difficulty": 3 },
+        { "id": "dc_4_004", "text": "Which police division does Takagi belong to?", "choices": ["Metropolitan Police Department", "Osaka Police", "Nagano Police", "Tokyo Intelligence Bureau"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_4_005", "text": "Which character often flirts with Sato Miwako?", "choices": ["Takagi Wataru", "Kogoro Mouri", "Shinichi Kudo", "Yusaku Kudo"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_4_006", "text": "Which organization is Kir actually loyal to?", "choices": ["CIA", "FBI", "Public Security Bureau", "Interpol"], "correctIndex": 0, "difficulty": 2 },
+        { "id": "dc_4_007", "text": "What’s the title of the first Detective Conan movie?", "choices": ["The Time Bombed Skyscraper", "The Fourteenth Target", "The Last Wizard of the Century", "Captured in Her Eyes"], "correctIndex": 0, "difficulty": 2 },
+        { "id": "dc_4_008", "text": "Who is the idol Conan often helps?", "choices": ["Yoko Okino", "Rena Mizunashi", "Miho Kohinata", "Yumiko Shibata"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_4_009", "text": "Which character disguises as Araide in the anime?", "choices": ["Vermouth", "Gin", "Bourbon", "Rum"], "correctIndex": 0, "difficulty": 2 },
+        { "id": "dc_4_010", "text": "What is Professor Agasa’s first name?", "choices": ["Hiroshi", "Taro", "Kenji", "Daichi"], "correctIndex": 0, "difficulty": 1 }
+      ]
+    },
+    {
+      "levelIndex": 5,
+      "questions": [
+        { "id": "dc_5_001", "text": "Which character is known as Bourbon?", "choices": ["Rei Furuya", "Gin", "Vodka", "Rum"], "correctIndex": 0, "difficulty": 3 },
+        { "id": "dc_5_002", "text": "What is Rei Furuya’s undercover name?", "choices": ["Toru Amuro", "Hiroshi Agasa", "Takagi Wataru", "Kaito Kuroba"], "correctIndex": 0, "difficulty": 3 },
+        { "id": "dc_5_003", "text": "Which of these is a member of the Detective Boys?", "choices": ["Mitsuhiko Tsuburaya", "Heiji Hattori", "Kaito Kuroba", "Vermouth"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_5_004", "text": "What gadget allows Conan to knock people unconscious safely?", "choices": ["Wristwatch dart gun", "Sleep gas spray", "Taser ring", "Hypnotic glasses"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_5_005", "text": "Who is Rum’s current known identity in the organization?", "choices": ["Kanenori Wakita", "Vermouth", "Bourbon", "Gin"], "correctIndex": 0, "difficulty": 3 },
+        { "id": "dc_5_006", "text": "What’s the name of Shinichi’s mother?", "choices": ["Yukiko Kudo", "Eri Kisaki", "Yoko Okino", "Elena Miyano"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_5_007", "text": "Which police inspector first discovered Conan’s secret in the manga?", "choices": ["Megure", "Takagi", "Heiji Hattori", "Sato"], "correctIndex": 2, "difficulty": 2 },
+        { "id": "dc_5_008", "text": "What kind of car does Kogoro Mouri drive?", "choices": ["Toyota Crown", "Mazda RX-7", "Nissan Skyline", "Honda Civic"], "correctIndex": 0, "difficulty": 2 },
+        { "id": "dc_5_009", "text": "Which theme is common in most Detective Conan openings?", "choices": ["Truth and justice", "Romance", "Comedy", "Adventure"], "correctIndex": 0, "difficulty": 1 },
+        { "id": "dc_5_010", "text": "Who is Conan’s biggest rival in deduction?", "choices": ["Heiji Hattori", "Kaito Kid", "Bourbon", "Eisuke Hondou"], "correctIndex": 1, "difficulty": 2 }
+      ]
+    }
   ]
 }

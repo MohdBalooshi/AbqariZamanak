@@ -246,7 +246,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.9960785, g: 0.83921576, b: 0.59607846, a: 1}
+  m_BackGroundColor: {r: 0.8745098, g: 0.8, b: 0.6862745, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -722,7 +722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9960785, g: 0.8392157, b: 0.59607846, a: 1}
+  m_Color: {r: 0.31764707, g: 0.21176472, b: 0.1137255, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -774,7 +774,7 @@ RectTransform:
   m_GameObject: {fileID: 1753553503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2656748, y: 1.2656748, z: 1.2656748}
+  m_LocalScale: {x: 1.1538018, y: 1.1538018, z: 1.1538018}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1152518854}
@@ -782,7 +782,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 32, y: 413}
-  m_SizeDelta: {x: 456.215, y: 462}
+  m_SizeDelta: {x: 450, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1753553505
 MonoBehaviour:
@@ -804,7 +804,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1231160002723799938, guid: 1b8b497ef1770624096ba717583a4342, type: 3}
+  m_Sprite: {fileID: 1607621060349872225, guid: b7f352c5bf60c094da9f1aba9c5150cf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -869,8 +869,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279066331
-  m_fontColor: {r: 0.8588236, g: 0.36862746, b: 0.050980397, a: 1}
+    rgba: 4279973201
+  m_fontColor: {r: 0.31764707, g: 0.20784315, b: 0.10588236, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

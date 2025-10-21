@@ -33,10 +33,10 @@ public class CategoryProgress
 [Serializable]
 public class GameSettings
 {
-    public float musicVolume = 0.8f;   // 0..1
-    public float sfxVolume   = 1.0f;   // 0..1
+    public float musicVolume = 0.8f;
+    public float sfxVolume   = 1.0f;
     public bool  vibrate     = true;
-    public string language   = "en";   // "en", "ar", ...
+    public string language   = "en";
 }
 
 [Serializable]
@@ -44,6 +44,8 @@ public class SaveData
 {
     public int coins = 0;
     public string playerName = "";
+    public bool signupBonusClaimed = false;   // NEW
+
     public GameSettings settings = new();
     public List<CategoryProgress> categories = new();
 }
@@ -79,7 +81,6 @@ public static class SaveSystem
     public static void Save()
     {
         if (Data == null) Data = new SaveData();
-
         foreach (var c in Data.categories) c?.SyncToLists();
 
         var json = JsonUtility.ToJson(Data);
@@ -97,7 +98,53 @@ public static class SaveSystem
         OnCoinsChanged?.Invoke(Data.coins);
     }
 
-    // ------------- Category helpers -------------
+    // ------------- Economy -------------
+    public static int GetCoins() => Data?.coins ?? 0;
+
+    public static bool HasCoins(int amount)
+    {
+        if (Data == null) Load();
+        return Data.coins >= Mathf.Max(0, amount);
+    }
+
+    public static bool TrySpend(int amount)
+    {
+        if (Data == null) Load();
+        amount = Mathf.Max(0, amount);
+        if (Data.coins < amount) return false;
+        Data.coins -= amount;
+        Save();
+        OnCoinsChanged?.Invoke(Data.coins);
+        return true;
+    }
+
+    public static void AddCoins(int amount)
+    {
+        if (Data == null) Load();
+        long sum = (long)Data.coins + amount;
+        Data.coins = (int)Mathf.Max(0, sum);
+        Save();
+        OnCoinsChanged?.Invoke(Data.coins);
+    }
+
+    public static void SetCoins(int value)
+    {
+        if (Data == null) Load();
+        Data.coins = Mathf.Max(0, value);
+        Save();
+        OnCoinsChanged?.Invoke(Data.coins);
+    }
+
+    public static void GrantSignupBonusOnce(int bonus)
+    {
+        if (Data == null) Load();
+        if (Data.signupBonusClaimed) return;
+        if (bonus > 0) AddCoins(bonus);
+        Data.signupBonusClaimed = true;
+        Save();
+    }
+
+    // ------------- Categories / levels -------------
     public static CategoryProgress GetProgress(string categoryId)
     {
         if (Data == null) Load();
@@ -139,7 +186,6 @@ public static class SaveSystem
         return bank.questions != null ? bank.questions.Count : 0;
     }
 
-    // ------------- Progress marks -------------
     public static void MarkSeen(string categoryId, string questionId, bool autoSave = true)
     {
         var p = GetProgress(categoryId);
@@ -154,25 +200,6 @@ public static class SaveSystem
         if (autoSave) Save();
     }
 
-    // ------------- Coins -------------
-    public static void AddCoins(int amount)
-    {
-        if (Data == null) Load();
-        long sum = (long)Data.coins + amount;
-        Data.coins = (int)Mathf.Max(0, sum);
-        Save();
-        OnCoinsChanged?.Invoke(Data.coins);
-    }
-
-    public static void SetCoins(int value)
-    {
-        if (Data == null) Load();
-        Data.coins = Mathf.Max(0, value);
-        Save();
-        OnCoinsChanged?.Invoke(Data.coins);
-    }
-
-    // ------------- Levels -------------
     public static int GetUnlockedLevelCount(string categoryId)
     {
         return GetProgress(categoryId).unlockedLevelMax;

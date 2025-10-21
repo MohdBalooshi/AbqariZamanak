@@ -2,14 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable] public class QuestionEntry
-{
-    public string id;
-    public string text;
-    public List<string> choices;   // exactly 4
-    public int correctIndex;       // 0..3
-    public int difficulty;         // optional
-}
 
 // NEW: one level = 10 questions
 [Serializable] public class LevelBank

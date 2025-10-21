@@ -8,14 +8,17 @@ public class LevelButtonHook : MonoBehaviour
 {
     [Header("UI (optional)")]
     public TMP_Text label;
-    public GameObject lockIcon;        // shown if locked
-    public GameObject completedIcon;   // optional “✔” or ribbon
+    public GameObject lockIcon;
+    public GameObject completedIcon;
 
-    // Hardcode to avoid prefab/Inspector drift
-    private const string QUIZ_SCENE_NAME = "Quiz";
+    [Header("Navigation")]
+    [SerializeField] private string quizSceneName = "Quiz";
 
     [Header("Guards")]
     [SerializeField] private bool requireContentToEnter = true;
+
+    [Header("Economy")]
+    [SerializeField] private EconomyConfig economy; // assign (can be null; then use default cost 0)
 
     private string _categoryId;
     private int _levelIndex;
@@ -25,7 +28,7 @@ public class LevelButtonHook : MonoBehaviour
     {
         _categoryId = categoryId;
         _levelIndex = levelIndex;
-        _unlocked   = unlocked;
+        _unlocked = unlocked;
 
         if (label) label.text = $"Level {_levelIndex}";
 
@@ -40,21 +43,16 @@ public class LevelButtonHook : MonoBehaviour
         img.raycastTarget = true;
 
         bool isComplete = SaveSystem.IsLevelComplete(_categoryId, _levelIndex);
-
         if (lockIcon)      lockIcon.SetActive(!_unlocked);
         if (completedIcon) completedIcon.SetActive(isComplete);
 
         btn.interactable = _unlocked && !isComplete;
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(OnClick);
-
-        Debug.Log($"[LevelButtonHook] Init: cat={_categoryId}, L{_levelIndex}, unlocked={_unlocked}, complete={isComplete}");
     }
 
     private void OnClick()
     {
-        Debug.Log($"[LevelButtonHook] CLICK: cat={_categoryId}, level={_levelIndex}");
-
         if (!_unlocked) { Debug.LogWarning("Level locked."); return; }
         if (SaveSystem.IsLevelComplete(_categoryId, _levelIndex))
         {
@@ -67,15 +65,31 @@ public class LevelButtonHook : MonoBehaviour
             return;
         }
 
+        int cost = economy ? economy.levelEntryCost : 0;
+        if (cost > 0)
+        {
+            if (!SaveSystem.HasCoins(cost))
+            {
+                CoinsGatePopup.Show(cost); // Not enough coins
+                return;
+            }
+
+            if (!SaveSystem.TrySpend(cost))
+            {
+                CoinsGatePopup.Show(cost);
+                return;
+            }
+        }
+
         QuizContext.SelectedCategoryId = _categoryId;
         QuizContext.SelectedLevelIndex = _levelIndex;
 
-        if (!Application.CanStreamedLevelBeLoaded(QUIZ_SCENE_NAME))
+        if (!Application.CanStreamedLevelBeLoaded(quizSceneName))
         {
-            Debug.LogError($"[LevelButtonHook] Scene '{QUIZ_SCENE_NAME}' not found in Build Settings.");
+            Debug.LogError($"Scene '{quizSceneName}' not found in Build Settings.");
             return;
         }
-        SceneManager.LoadScene(QUIZ_SCENE_NAME);
+        SceneManager.LoadScene(quizSceneName);
     }
 
     private bool LevelHasContent(string catId, int levelIndex)
@@ -88,6 +102,7 @@ public class LevelButtonHook : MonoBehaviour
             var lvl = bank.levels.FirstOrDefault(l => l.levelIndex == levelIndex);
             return lvl != null && lvl.questions != null && lvl.questions.Count > 0;
         }
+
         return (levelIndex == 1) && (bank.questions != null && bank.questions.Count > 0);
     }
 }

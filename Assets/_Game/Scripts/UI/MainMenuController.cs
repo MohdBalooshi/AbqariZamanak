@@ -14,14 +14,14 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button btnInfo;
 
     [Header("Profile UI (shown after login)")]
-    [SerializeField] private GameObject playerNameChip; // container object (e.g., a small panel/button)
+    [SerializeField] private GameObject playerNameChip; // a small panel/button
     [SerializeField] private TMP_Text playerNameText;   // text inside the chip
-    [SerializeField] private bool chipOpensLoginOnClick = true; // allow changing name
+    [SerializeField] private bool chipOpensLoginOnClick = true; // allow rename by tapping chip
 
     [Header("Info Panel")]
     [SerializeField] private GameObject infoPanel;      // has CanvasGroup
     [SerializeField] private TMP_Text infoText;
-    [SerializeField] private Button infoBGButton;
+    [SerializeField] private Button infoBGButton;       // background button to close
     [SerializeField] private float fadeDuration = 0.3f;
     [SerializeField] private bool useScaleIn = true;
 
@@ -46,6 +46,9 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private string categorySceneName = "CategoryScene";
     [SerializeField] private string achievementsSceneName = "Achievements";
 
+    [Header("Economy")]
+    [SerializeField] private EconomyConfig economy; // assign EconomyConfig asset in Inspector
+
     private Coroutine infoRoutine, loginRoutine, settingsRoutine;
 
     private void Awake()
@@ -55,7 +58,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
-        // Main nav buttons (with login gate)
+        // Main nav buttons (with login gate on Start/Achievements)
         if (btnStart)        { btnStart.onClick.RemoveAllListeners();        btnStart.onClick.AddListener(OnStartGate); }
         if (btnAchievements) { btnAchievements.onClick.RemoveAllListeners(); btnAchievements.onClick.AddListener(OnAchievementsGate); }
         if (btnSettings)     { btnSettings.onClick.RemoveAllListeners();     btnSettings.onClick.AddListener(OpenSettings); }
@@ -82,7 +85,7 @@ public class MainMenuController : MonoBehaviour
         if (settingsCloseButton){ settingsCloseButton.onClick.RemoveAllListeners(); settingsCloseButton.onClick.AddListener(CloseSettings); }
         if (settingsBGButton)   { settingsBGButton.onClick.RemoveAllListeners();   settingsBGButton.onClick.AddListener(CloseSettings); }
 
-        // Panels default
+        // Panels default off
         if (infoPanel)     infoPanel.SetActive(false);
         if (loginPanel)    loginPanel.SetActive(false);
         if (settingsPanel) settingsPanel.SetActive(false);
@@ -201,11 +204,14 @@ public class MainMenuController : MonoBehaviour
         if (string.IsNullOrEmpty(name)) name = "Player";
         SaveSystem.SetPlayerName(name);
 
+        // Grant signup bonus once
+        if (economy) SaveSystem.GrantSignupBonusOnce(economy.signupBonusCoins);
+
         // Enable navigation + update UI
         SetGateInteractivity(true);
         RefreshProfileUI();
 
-        Debug.Log($"[MainMenu] Player name set to '{name}'.");
+        Debug.Log($"[MainMenu] Player name set to '{name}'. Bonus granted if first login.");
         CloseLogin();
     }
 

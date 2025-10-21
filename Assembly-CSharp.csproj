@@ -47,12 +47,14 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.2.6f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_Game\Scripts\Systems\AdsManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\_Game\Scripts\Dev\DevCheats.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\CoinsDisplay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\_Game\Scripts\Systems\QuestionTimer.cs" />
+    <Compile Include="Assets\_Game\Configs\EconomyConfig.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\CategoryListUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\ArabicWriter\Scripts\ArabicWriter.cs" />
@@ -91,18 +93,20 @@
     <Compile Include="Assets\_Game\Art\FX\ConfettiBurst.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\CategoryButtonHook.cs" />
-    <Compile Include="Assets\_Game\Scripts\UI\SimpleQuiz.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\SceneFader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\_Game\Scripts\UI\ShopPanelController.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\Spinner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\QuizTimed.cs" />
+    <Compile Include="Assets\_Game\Scripts\Data\QuestionBank.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\_Game\Scripts\UI\CoinsGatePopup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

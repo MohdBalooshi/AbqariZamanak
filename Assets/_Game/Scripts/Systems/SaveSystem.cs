@@ -271,6 +271,58 @@ public static class SaveSystem
         Save();
     }
 
+// % of a single level: correct in that level / total in that level
+public static float GetLevelPercent(string categoryId, int levelIndex)
+{
+    if (!QuestionDB.Banks.TryGetValue(categoryId, out var bank)) return 0f;
+
+    List<QuestionEntry> list = null;
+    if (bank.levels != null && bank.levels.Count > 0)
+    {
+        var lvl = bank.levels.FirstOrDefault(l => l.levelIndex == levelIndex);
+        if (lvl == null || lvl.questions == null || lvl.questions.Count == 0) return 0f;
+        list = lvl.questions;
+    }
+    else
+    {
+        if (levelIndex != 1) return 0f;
+        list = bank.questions ?? new List<QuestionEntry>();
+    }
+
+    var p = GetProgress(categoryId);
+    int total = list.Count;
+    if (total <= 0) return 0f;
+
+    int correct = list.Count(q => p.correctQuestionIds.Contains(q.id));
+    return (correct / (float)total) * 100f;
+}
+
+// Are all levels in [startLevel..endLevel] 100% complete?
+public static bool AreLevelsCompleteInRange(string categoryId, int startLevel, int endLevel)
+{
+    if (!QuestionDB.Banks.TryGetValue(categoryId, out var bank)) return false;
+
+    // If the bank has explicit level blocks:
+    if (bank.levels != null && bank.levels.Count > 0)
+    {
+        for (int i = startLevel; i <= endLevel; i++)
+        {
+            var lvl = bank.levels.FirstOrDefault(l => l.levelIndex == i);
+            if (lvl == null || lvl.questions == null || lvl.questions.Count == 0) return false;
+
+            var p = GetProgress(categoryId);
+            if (lvl.questions.Any(q => !p.correctQuestionIds.Contains(q.id))) return false;
+        }
+        return true;
+    }
+
+    // Single-level category: treat only level 1 as the whole range
+    if (startLevel <= 1 && endLevel >= 1)
+        return IsLevelComplete(categoryId, 1);
+
+    return false;
+}
+
     public static void ResetCategory(string categoryId, bool keepUnlockedLevelsAt1 = true)
     {
         var p = GetProgress(categoryId);

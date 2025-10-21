@@ -165,60 +165,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &131807246
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 131807248}
-  - component: {fileID: 131807247}
-  m_Layer: 0
-  m_Name: LevelSelectController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &131807247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131807246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc9b7f1e45751fe46b7187217d14c757, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelSelectPagedUI
-  gridParent: {fileID: 1276847159}
-  levelButtonPrefab: {fileID: 3250832753139785871, guid: c58da64fe454cbc43a0e41c10d1d9297, type: 3}
-  categoryTitle: {fileID: 806423678}
-  btnPrev: {fileID: 1800305767}
-  btnNext: {fileID: 1163772653}
-  pageText: {fileID: 293084224}
-  levelsPerPage: 20
-  displayLevelCount: 100
-  lockIfNoContent: 1
-  categoryIdOverride: 
---- !u!4 &131807248
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131807246}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 143.66057, y: -178.09924, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &268945993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,6 +2122,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541410025}
   m_CullTransparentMesh: 1
+--- !u!1 &1551485310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1551485312}
+  - component: {fileID: 1551485311}
+  m_Layer: 0
+  m_Name: LevelSelectPager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1551485311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551485310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4583e0814b7009547a6b470849901ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSelectPagerGrid
+  categoryId: 
+  gridRoot: {fileID: 1276847159}
+  btnPrev: {fileID: 1800305767}
+  btnNext: {fileID: 1163772653}
+  pageLabel: {fileID: 293084224}
+  levelsPerPage: 20
+--- !u!4 &1551485312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551485310}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 138.71512, y: 199.35265, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1567433463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3183,6 +3179,60 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &2119838880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2119838882}
+  - component: {fileID: 2119838881}
+  m_Layer: 0
+  m_Name: LevelSelectController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2119838881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119838880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9b7f1e45751fe46b7187217d14c757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSelectPagedUI
+  gridParent: {fileID: 1276847159}
+  levelButtonPrefab: {fileID: 3250832753139785871, guid: c58da64fe454cbc43a0e41c10d1d9297, type: 3}
+  categoryTitle: {fileID: 806423678}
+  btnPrev: {fileID: 0}
+  btnNext: {fileID: 0}
+  pageText: {fileID: 0}
+  levelsPerPage: 20
+  displayLevelCount: 100
+  lockIfNoContent: 1
+  categoryIdOverride: 
+--- !u!4 &2119838882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119838880}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 138.71512, y: 199.35265, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3998071429678344681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3287,5 +3337,6 @@ SceneRoots:
   - {fileID: 1999557013}
   - {fileID: 328826728}
   - {fileID: 268945996}
-  - {fileID: 131807248}
   - {fileID: 122666500}
+  - {fileID: 1551485312}
+  - {fileID: 2119838882}

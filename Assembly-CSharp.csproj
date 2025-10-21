@@ -79,6 +79,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\ArabicWriter\Scripts\ArabicSupport.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\_Game\Scripts\UI\LevelSelectPager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\InternetChecker.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Assets\_Game\Scripts\Core\DataModels.cs" />
     <Compile Include="Assets\_Game\Scripts\Systems\OnlineGate.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\_Game\Scripts\UI\LevelSelectPagerGrid.cs" />
     <Compile Include="Assets\_Game\Art\FX\ConfettiBurst.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\CategoryButtonHook.cs" />

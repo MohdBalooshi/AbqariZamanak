@@ -6,10 +6,12 @@ using System.Linq;
 
 public class LevelButtonHook : MonoBehaviour
 {
-    [Header("UI (optional)")]
-    public TMP_Text label;
+    [Header("UI")]
+    public TMP_Text label;                  // "Level 1"
     public GameObject lockIcon;
     public GameObject completedIcon;
+    [SerializeField] private Image progressFill; // type: Filled, Horizontal, FillAmount 0..1
+    [SerializeField] private TMP_Text progressText; // "45%"
 
     [Header("Navigation")]
     [SerializeField] private string quizSceneName = "Quiz";
@@ -18,7 +20,7 @@ public class LevelButtonHook : MonoBehaviour
     [SerializeField] private bool requireContentToEnter = true;
 
     [Header("Economy")]
-    [SerializeField] private EconomyConfig economy; // assign (can be null; then use default cost 0)
+    [SerializeField] private EconomyConfig economy;
 
     private string _categoryId;
     private int _levelIndex;
@@ -42,9 +44,15 @@ public class LevelButtonHook : MonoBehaviour
         if (btn.targetGraphic == null) btn.targetGraphic = img;
         img.raycastTarget = true;
 
+        // Completion & progress
         bool isComplete = SaveSystem.IsLevelComplete(_categoryId, _levelIndex);
         if (lockIcon)      lockIcon.SetActive(!_unlocked);
         if (completedIcon) completedIcon.SetActive(isComplete);
+
+        // Progress bar
+        float pct = SaveSystem.GetLevelPercent(_categoryId, _levelIndex);
+        if (progressFill)  progressFill.fillAmount = Mathf.Clamp01(pct / 100f);
+        if (progressText)  progressText.text = $"{pct:0}%";
 
         btn.interactable = _unlocked && !isComplete;
         btn.onClick.RemoveAllListeners();
@@ -68,13 +76,7 @@ public class LevelButtonHook : MonoBehaviour
         int cost = economy ? economy.levelEntryCost : 0;
         if (cost > 0)
         {
-            if (!SaveSystem.HasCoins(cost))
-            {
-                CoinsGatePopup.Show(cost); // Not enough coins
-                return;
-            }
-
-            if (!SaveSystem.TrySpend(cost))
+            if (!SaveSystem.HasCoins(cost) || !SaveSystem.TrySpend(cost))
             {
                 CoinsGatePopup.Show(cost);
                 return;
@@ -102,7 +104,6 @@ public class LevelButtonHook : MonoBehaviour
             var lvl = bank.levels.FirstOrDefault(l => l.levelIndex == levelIndex);
             return lvl != null && lvl.questions != null && lvl.questions.Count > 0;
         }
-
         return (levelIndex == 1) && (bank.questions != null && bank.questions.Count > 0);
     }
 }

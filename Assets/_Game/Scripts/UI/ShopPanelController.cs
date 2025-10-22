@@ -4,10 +4,10 @@ using TMPro;
 using System.Collections;
 
 /// <summary>
-/// Handles the in-game coin shop popup:
+/// In-game coin shop popup:
+/// - Auto-spawns from Resources if no instance exists
 /// - Opens with fade/slide animation
-/// - Buys coin packs (stubbed; calls SaveSystem.AddCoins)
-/// - Closes with fade/slide
+/// - Buys coin packs (adds coins via SaveSystem)
 /// </summary>
 public class ShopPanelController : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class ShopPanelController : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private CanvasGroup canvasGroup;     // required for fade
-    [SerializeField] private RectTransform window;        // the inner window to slide (not the whole screen BG)
+    [SerializeField] private RectTransform window;        // inner card to slide
     [SerializeField] private TMP_Text titleText;
 
     [Header("Buttons")]
@@ -30,11 +30,11 @@ public class ShopPanelController : MonoBehaviour
     [SerializeField] private TMP_Text largeLabel;         // e.g. "+1000 coins"
 
     [Header("Economy")]
-    [SerializeField] private EconomyConfig economy;       // drag your EconomyConfig asset here
+    [SerializeField] private EconomyConfig economy;       // drag EconomyConfig asset (if prefab, wire it there)
 
     [Header("Animation")]
-    [SerializeField] private float fadeDuration = 0.25f;  // seconds
-    [SerializeField] private float slideDistance = 120f;  // pixels to slide up from
+    [SerializeField] private float fadeDuration = 0.25f;
+    [SerializeField] private float slideDistance = 120f;
     [SerializeField] private AnimationCurve ease = AnimationCurve.EaseInOut(0,0,1,1);
 
     private Coroutine animRoutine;
@@ -43,42 +43,66 @@ public class ShopPanelController : MonoBehaviour
     {
         Instance = this;
 
-        // Hook buttons
         if (btnClose)      { btnClose.onClick.RemoveAllListeners();      btnClose.onClick.AddListener(Close); }
         if (btnSmallPack)  { btnSmallPack.onClick.RemoveAllListeners();  btnSmallPack.onClick.AddListener(BuySmallPack); }
         if (btnMediumPack) { btnMediumPack.onClick.RemoveAllListeners(); btnMediumPack.onClick.AddListener(BuyMediumPack); }
         if (btnLargePack)  { btnLargePack.onClick.RemoveAllListeners();  btnLargePack.onClick.AddListener(BuyLargePack); }
 
-        // Ensure default hidden state is clean
-        if (canvasGroup) canvasGroup.alpha = 0f;
-        // Do NOT auto-deactivate here; let the scene decide. We handle activation in Open().
-        gameObject.SetActive(gameObject.activeSelf); 
+        if (canvasGroup) canvasGroup.alpha = 0f; // start hidden
+        // Keep active state as-is; Open() will ensure activation.
     }
 
-    // -------- Static helper to show from anywhere --------
+    // ---------- Static API ----------
     public static void Show()
     {
         if (Instance == null)
         {
-            // Try to find an instance in the scene (including inactive)
+            // try find (including inactive)
             Instance = Object.FindFirstObjectByType<ShopPanelController>(FindObjectsInactive.Include);
+
+            // auto-spawn from Resources if still missing
             if (Instance == null)
             {
-                Debug.LogWarning("[ShopPanel] No instance found in scene.");
-                return;
+                Instance = TrySpawnFromResources();
+                if (Instance == null)
+                {
+                    Debug.LogWarning("[ShopPanel] No instance and no prefab at Resources/ShopPanel. Cannot open shop.");
+                    return;
+                }
             }
         }
+
         Instance.Open();
     }
 
-    // -------- Public API --------
+    private static ShopPanelController TrySpawnFromResources()
+    {
+        // Expect: Assets/Resources/ShopPanel.prefab (root has this script)
+        var prefab = Resources.Load<ShopPanelController>("ShopPanel");
+        if (!prefab) return null;
+
+        // Find a Canvas to parent under, or create one
+        var canvas = Object.FindFirstObjectByType<Canvas>(FindObjectsInactive.Include);
+        if (!canvas)
+        {
+            var go = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            var c = go.GetComponent<Canvas>();
+            c.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas = c;
+        }
+
+        var inst = Object.Instantiate(prefab, canvas.transform);
+        inst.gameObject.SetActive(true); // make sure it's active so coroutines can run
+        return inst;
+    }
+
+    // ---------- Instance API ----------
     public void Open()
     {
         RefreshLabels();
 
-        // ✅ Activate before starting any coroutine (fixes the warning)
         if (!gameObject.activeSelf)
-            gameObject.SetActive(true);
+            gameObject.SetActive(true);         // ensure active before coroutine
 
         if (animRoutine != null) StopCoroutine(animRoutine);
         animRoutine = StartCoroutine(AnimateOpen());
@@ -90,7 +114,7 @@ public class ShopPanelController : MonoBehaviour
         animRoutine = StartCoroutine(AnimateClose());
     }
 
-    // -------- Purchases (stubbed) --------
+    // ---------- Purchases (stub) ----------
     private void BuySmallPack()  => PurchaseCoins(economy ? economy.packSmallCoins  : 100);
     private void BuyMediumPack() => PurchaseCoins(economy ? economy.packMediumCoins : 300);
     private void BuyLargePack()  => PurchaseCoins(economy ? economy.packLargeCoins  : 1000);
@@ -102,11 +126,10 @@ public class ShopPanelController : MonoBehaviour
         Close();
     }
 
-    // -------- Internals --------
+    // ---------- Internals ----------
     private void RefreshLabels()
     {
         if (titleText) titleText.text = "Coin Shop";
-
         if (!economy) return;
         if (smallLabel)  smallLabel.text  = $"+{economy.packSmallCoins} coins";
         if (mediumLabel) mediumLabel.text = $"+{economy.packMediumCoins} coins";
@@ -117,17 +140,13 @@ public class ShopPanelController : MonoBehaviour
     {
         if (!canvasGroup) yield break;
 
-        float t = 0f;
-        float dur = Mathf.Max(0.01f, fadeDuration);
-
-        // Prepare start state
+        float t = 0f, dur = Mathf.Max(0.01f, fadeDuration);
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable   = true;
         canvasGroup.alpha = 0f;
 
         Vector2 startPos = window ? window.anchoredPosition : Vector2.zero;
         Vector2 fromPos  = startPos + Vector2.down * slideDistance;
-
         if (window) window.anchoredPosition = fromPos;
 
         while (t < dur)
@@ -148,9 +167,7 @@ public class ShopPanelController : MonoBehaviour
     {
         if (!canvasGroup) { gameObject.SetActive(false); yield break; }
 
-        float t = 0f;
-        float dur = Mathf.Max(0.01f, fadeDuration);
-
+        float t = 0f, dur = Mathf.Max(0.01f, fadeDuration);
         Vector2 startPos = window ? window.anchoredPosition : Vector2.zero;
         Vector2 toPos    = startPos + Vector2.down * slideDistance;
 

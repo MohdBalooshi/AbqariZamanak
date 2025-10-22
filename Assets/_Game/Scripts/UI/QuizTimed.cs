@@ -24,6 +24,11 @@ public class QuizTimed : MonoBehaviour
     [SerializeField] private TMP_Text labelC;
     [SerializeField] private TMP_Text labelD;
 
+    [Header("Per-Question Timer")]
+    [SerializeField] private Image timerFill;        // Image (Type = Filled, Method = Horizontal, Origin = Left)
+    [SerializeField] private TMP_Text timerText;     // optional seconds label
+    [SerializeField] private float secondsPerQuestion = 15f;
+
     [Header("Round Config")]
     [SerializeField] private int questionsPerRound = 10;
     [SerializeField] private int unlockThreshold   = 8;
@@ -36,7 +41,15 @@ public class QuizTimed : MonoBehaviour
     [Header("Failure UI")]
     [SerializeField] private GameObject failPanel;
     [SerializeField] private Button btnAdRetry;
-    [SerializeField] private Button btnQuit;
+    [SerializeField] private Button btnQuitFail;     // (optional) quit from fail panel -> LevelSelect
+
+    [Header("Quit Flow (in-quiz)")]
+    [SerializeField] private Button btnQuitTop;      // top-right quit button
+    [SerializeField] private GameObject quitConfirmPanel; // inactive by default
+    [SerializeField] private CanvasGroup quitConfirmCg;   // optional fade
+    [SerializeField] private Button btnQuitConfirm;       // confirm quit -> LevelSelect
+    [SerializeField] private Button btnQuitCancel;        // close panel
+    [SerializeField] private float quitFade = 0.15f;
 
     [Header("Feedback")]
     [SerializeField] private ParticleSystem confetti;
@@ -57,6 +70,13 @@ public class QuizTimed : MonoBehaviour
     private int[] currentChoiceOrder = null;       // e.g., [2,0,3,1]
     private int currentShuffledCorrectIndex = -1;  // 0..3 after shuffle
 
+    // timer
+    private float remaining;
+    private bool timerRunning;
+
+    // pause/return
+    private bool wasBackgrounded = false;
+
     private void Awake()
     {
         if (SaveSystem.Data == null) SaveSystem.Load();
@@ -64,19 +84,29 @@ public class QuizTimed : MonoBehaviour
 
     private void Start()
     {
+        // Panels off
         if (resultsPanel) resultsPanel.SetActive(false);
         if (failPanel)    failPanel.SetActive(false);
         if (toastPanel)   toastPanel.SetActive(false);
+        if (quitConfirmPanel) quitConfirmPanel.SetActive(false);
 
-        if (btnToMenu)  { btnToMenu.onClick.RemoveAllListeners();  btnToMenu.onClick.AddListener(() => SceneManager.LoadScene("MainMenu")); }
-        if (btnAdRetry) { btnAdRetry.onClick.RemoveAllListeners(); btnAdRetry.onClick.AddListener(OnAdRetry); }
-        if (btnQuit)    { btnQuit.onClick.RemoveAllListeners();    btnQuit.onClick.AddListener(() => SceneManager.LoadScene("LevelSelect")); }
+        // Wire result/fail buttons
+        if (btnToMenu)      { btnToMenu.onClick.RemoveAllListeners();      btnToMenu.onClick.AddListener(() => SceneManager.LoadScene("MainMenu")); }
+        if (btnAdRetry)     { btnAdRetry.onClick.RemoveAllListeners();     btnAdRetry.onClick.AddListener(OnAdRetry); }
+        if (btnQuitFail)    { btnQuitFail.onClick.RemoveAllListeners();    btnQuitFail.onClick.AddListener(() => SceneManager.LoadScene("LevelSelect")); }
 
+        // Wire quit/top confirmation
+        if (btnQuitTop)     { btnQuitTop.onClick.RemoveAllListeners();     btnQuitTop.onClick.AddListener(OpenQuitConfirm); }
+        if (btnQuitConfirm) { btnQuitConfirm.onClick.RemoveAllListeners(); btnQuitConfirm.onClick.AddListener(QuitToLevelSelect); }
+        if (btnQuitCancel)  { btnQuitCancel.onClick.RemoveAllListeners();  btnQuitCancel.onClick.AddListener(CloseQuitConfirm); }
+
+        // Wire answer buttons
         WireAnswer(btnA, 0);
         WireAnswer(btnB, 1);
         WireAnswer(btnC, 2);
         WireAnswer(btnD, 3);
 
+        // Load DB + choose set
         PrepareBankAndLevel();
         if (bank == null)
         {
@@ -85,22 +115,53 @@ public class QuizTimed : MonoBehaviour
             return;
         }
 
+        // previous % for improvement/toast
         int totalQs = TotalQuestionCount(bank);
         percentBefore = SaveSystem.GetPercent(bank.categoryId, totalQs);
 
+        // Build round questions
         BuildRoundQuestions();
 
+        // Top bar
         if (categoryTitle) categoryTitle.text = bank.categoryName;
         UpdateCoinsTopBar();
         SaveSystem.OnCoinsChanged += OnCoinsChanged;
 
+        // First question
         NextQuestion();
     }
 
-    private void OnDestroy() => SaveSystem.OnCoinsChanged -= OnCoinsChanged;
+    private void OnDestroy()
+    {
+        SaveSystem.OnCoinsChanged -= OnCoinsChanged;
+    }
+
+    // ---------- Pause / Resume behavior ----------
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            wasBackgrounded = true;           // left the app
+        }
+        else
+        {
+            if (wasBackgrounded)
+            {
+                SceneManager.LoadScene("MainMenu"); // no refund
+            }
+        }
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus) wasBackgrounded = true;
+    }
+
+    // ---------- Coins HUD ----------
     private void OnCoinsChanged(int _) => UpdateCoinsTopBar();
     private void UpdateCoinsTopBar() { if (coinsText) coinsText.text = SaveSystem.GetCoins().ToString(); }
 
+    // ---------- Answers ----------
     private void WireAnswer(Button btn, int index)
     {
         if (!btn) return;
@@ -108,6 +169,7 @@ public class QuizTimed : MonoBehaviour
         btn.onClick.AddListener(() => OnAnswerPressed(index));
     }
 
+    // ---------- Data prep ----------
     private void PrepareBankAndLevel()
     {
         if (QuestionDB.Banks == null || QuestionDB.Banks.Count == 0)
@@ -140,7 +202,7 @@ public class QuizTimed : MonoBehaviour
 
         var prog = SaveSystem.GetProgress(bank.categoryId);
 
-        // Prefer new (not-yet-correct) questions; fill with already-correct if needed to reach 10.
+        // Prefer new questions; fill with already-correct if needed to reach 10.
         var notCorrect = level.questions.Where(q => !prog.correctQuestionIds.Contains(q.id)).ToList();
 
         var pool = new List<QuestionEntry>(notCorrect);
@@ -163,6 +225,7 @@ public class QuizTimed : MonoBehaviour
         UpdateCounter();
     }
 
+    // ---------- Question flow ----------
     private void NextQuestion()
     {
         currentIndex++;
@@ -171,41 +234,39 @@ public class QuizTimed : MonoBehaviour
         var q = roundQuestions[currentIndex];
         if (q == null) { EndRound(); return; }
 
-        // mark seen
+        // Mark seen
         SaveSystem.MarkSeen(bank.categoryId, q.id, autoSave: false);
         SaveSystem.Save();
 
-        // set question text
+        // Text
         if (questionText) questionText.text = q.text;
 
-        // build shuffled choice order and compute shuffled correct index
+        // Shuffle choices
         SetupShuffledChoices(q);
 
-        // re-enable answers
+        // Reset & start timer (HARD reset UI first)
+        ResetTimerUI();
+        StartTimer();
+
+        // Re-enable answers
         SetAnswersInteractable(true);
         UpdateCounter();
     }
 
     private void SetupShuffledChoices(QuestionEntry q)
     {
-        // Build order 0..(n-1)
         int n = (q.choices != null) ? q.choices.Count : 0;
         if (n < 2)
         {
-            // fallback: disable further
             currentChoiceOrder = new[] { 0, 1, 2, 3 };
             currentShuffledCorrectIndex = q.correctIndex;
             ApplyLabels(q);
             return;
         }
 
-        // create order array and shuffle
         currentChoiceOrder = Enumerable.Range(0, n).ToArray();
         Shuffle(currentChoiceOrder);
-
-        // find where the original correctIndex ended up after shuffle
         currentShuffledCorrectIndex = System.Array.IndexOf(currentChoiceOrder, q.correctIndex);
-
         ApplyLabels(q);
     }
 
@@ -234,6 +295,61 @@ public class QuizTimed : MonoBehaviour
         if (btnD) btnD.interactable = on;
     }
 
+    private void Update()
+    {
+        // Timer tick
+        if (timerRunning)
+        {
+            remaining -= Time.deltaTime;
+
+            if (timerFill)
+            {
+                float norm = Mathf.Clamp01(remaining / Mathf.Max(0.001f, secondsPerQuestion));
+                timerFill.fillAmount = norm;
+            }
+            if (timerText)
+            {
+                timerText.text = Mathf.Max(0, Mathf.CeilToInt(remaining)).ToString();
+            }
+
+            if (remaining <= 0f)
+            {
+                timerRunning = false;
+                // timeout counts as incorrect → move on
+                SetAnswersInteractable(false);
+                StartCoroutine(NextQuestionAfter(0.2f));
+            }
+        }
+    }
+
+    // ---- Timer helpers ----
+    private void ResetTimerUI()
+    {
+        // Force fill to 1 and text to full seconds every time we show a new question
+        if (timerFill)
+        {
+            timerFill.fillAmount = 1f;      // visually full
+        }
+        if (timerText)
+        {
+            int secs = Mathf.CeilToInt(Mathf.Max(1f, secondsPerQuestion));
+            timerText.text = secs.ToString();
+        }
+        // Ensure Unity immediately lays out changes
+        Canvas.ForceUpdateCanvases();
+    }
+
+    private void StartTimer()
+    {
+        remaining = Mathf.Max(1f, secondsPerQuestion);
+        timerRunning = true;
+    }
+
+    private void StopTimer()
+    {
+        timerRunning = false;
+    }
+
     private void UpdateCounter()
     {
         if (!questionCounterText) return;
@@ -244,6 +360,7 @@ public class QuizTimed : MonoBehaviour
 
     private void OnAnswerPressed(int pressedSlotIndex)
     {
+        StopTimer();
         SetAnswersInteractable(false);
 
         var q = roundQuestions[currentIndex];
@@ -263,6 +380,7 @@ public class QuizTimed : MonoBehaviour
         NextQuestion();
     }
 
+    // ---------- End round ----------
     private void EndRound()
     {
         bool justUnlockedNext = false;
@@ -328,7 +446,61 @@ public class QuizTimed : MonoBehaviour
         toastPanel.SetActive(false);
     }
 
-    // helpers
+    // ---------- Quit confirm helpers ----------
+    private void OpenQuitConfirm()
+    {
+        if (!quitConfirmPanel) return;
+        if (!quitConfirmPanel.activeSelf) quitConfirmPanel.SetActive(true);
+
+        if (quitConfirmCg)
+        {
+            quitConfirmCg.alpha = 0f;
+            quitConfirmCg.blocksRaycasts = true;
+            quitConfirmCg.interactable = true;
+            StartCoroutine(FadeTo(quitConfirmCg, 1f, quitFade));
+        }
+    }
+
+    private void CloseQuitConfirm()
+    {
+        if (!quitConfirmPanel) return;
+
+        if (quitConfirmCg)
+        {
+            StartCoroutine(FadeTo(quitConfirmCg, 0f, quitFade, () =>
+            {
+                quitConfirmCg.blocksRaycasts = false;
+                quitConfirmCg.interactable = false;
+                quitConfirmPanel.SetActive(false);
+            }));
+        }
+        else
+        {
+            quitConfirmPanel.SetActive(false);
+        }
+    }
+
+    private void QuitToLevelSelect()
+    {
+        // No refund: cost was charged on entry via LevelButtonHook.
+        SceneManager.LoadScene("LevelSelect");
+    }
+
+    private IEnumerator FadeTo(CanvasGroup cg, float target, float dur, System.Action onEnd = null)
+    {
+        float start = cg.alpha;
+        float t = 0f;
+        while (t < dur)
+        {
+            t += Time.unscaledDeltaTime;
+            cg.alpha = Mathf.Lerp(start, target, t / dur);
+            yield return null;
+        }
+        cg.alpha = target;
+        onEnd?.Invoke();
+    }
+
+    // ---------- Helpers ----------
     private static int TotalQuestionCount(CategoryBank b)
     {
         if (b == null) return 0;
@@ -346,7 +518,6 @@ public class QuizTimed : MonoBehaviour
         }
     }
 
-    // overload for int[]
     private static void Shuffle(int[] arr)
     {
         for (int i = arr.Length - 1; i > 0; --i)

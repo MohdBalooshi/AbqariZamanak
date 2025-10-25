@@ -942,7 +942,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 7482667652216324306, guid: 7adc61581e79e3f46a70aada8119966e, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1290,7 +1290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 20
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b80dc9906180b4d4abfcc5eefdacc54c, type: 2}
   m_sharedMaterial: {fileID: -620065970055131063, guid: b80dc9906180b4d4abfcc5eefdacc54c, type: 2}
@@ -2121,7 +2121,7 @@ MonoBehaviour:
   labelD: {fileID: 409668591}
   timerFill: {fileID: 326115168}
   timerText: {fileID: 529375707}
-  secondsPerQuestion: 20
+  secondsPerQuestion: 15
   questionsPerRound: 10
   unlockThreshold: 8
   resultsPanel: {fileID: 771589514}
@@ -3351,7 +3351,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 7482667652216324306, guid: 7adc61581e79e3f46a70aada8119966e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

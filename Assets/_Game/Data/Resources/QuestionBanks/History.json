@@ -1,17 +1,77 @@
 {
   "categoryId": "history",
   "categoryName": "History",
-  "questionsPerRound": 5,
+  "questionsPerRound": 10,
   "questions": [
-    { "id": "hi_001", "text": "Who is credited with discovering America (1492)?", "choices": ["Marco Polo", "Christopher Columbus", "Ferdinand Magellan", "James Cook"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "hi_002", "text": "In which year did World War II end?", "choices": ["1940", "1942", "1945", "1948"], "correctIndex": 2, "difficulty": 1 },
-    { "id": "hi_003", "text": "The Pyramids of Giza were built in which country?", "choices": ["Iraq", "Egypt", "Iran", "Sudan"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "hi_004", "text": "Who was the first President of the United States?", "choices": ["Abraham Lincoln", "George Washington", "Thomas Jefferson", "John Adams"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "hi_005", "text": "The Great Wall was built in which country?", "choices": ["Japan", "China", "Korea", "Mongolia"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "hi_006", "text": "Who was known as the \"Maid of Orléans\"?", "choices": ["Cleopatra", "Joan of Arc", "Elizabeth I", "Marie Antoinette"], "correctIndex": 1, "difficulty": 2 },
-    { "id": "hi_007", "text": "In which city was democracy born?", "choices": ["Rome", "Athens", "Paris", "London"], "correctIndex": 1, "difficulty": 2 },
-    { "id": "hi_008", "text": "Which empire built the Colosseum?", "choices": ["Greek", "Roman", "Persian", "Ottoman"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "hi_009", "text": "Which Egyptian pharaoh is associated with a famed golden mask?", "choices": ["Akhenaten", "Ramses II", "Tutankhamun", "Khufu"], "correctIndex": 2, "difficulty": 2 },
-    { "id": "hi_010", "text": "The Cold War was mainly between the USA and which country?", "choices": ["Germany", "China", "USSR", "Japan"], "correctIndex": 2, "difficulty": 1 }
+    {
+      "id": "his_001",
+      "text": "Who was the first President of the United States?",
+      "choices": ["Abraham Lincoln", "Thomas Jefferson", "George Washington", "John Adams"],
+      "correctIndex": 2,
+      "difficulty": 1
+    },
+    {
+      "id": "his_002",
+      "text": "In which year did World War II end?",
+      "choices": ["1945", "1939", "1950", "1942"],
+      "correctIndex": 0,
+      "difficulty": 1
+    },
+    {
+      "id": "his_003",
+      "text": "Which ancient civilization built the pyramids?",
+      "choices": ["Romans", "Greeks", "Egyptians", "Mayans"],
+      "correctIndex": 2,
+      "difficulty": 1
+    },
+    {
+      "id": "his_004",
+      "text": "The Great Wall of China was primarily built to protect against which group?",
+      "choices": ["Mongols", "Romans", "Persians", "Vikings"],
+      "correctIndex": 0,
+      "difficulty": 1
+    },
+    {
+      "id": "his_005",
+      "text": "Who discovered America in 1492?",
+      "choices": ["Marco Polo", "Christopher Columbus", "Vasco da Gama", "Magellan"],
+      "correctIndex": 1,
+      "difficulty": 1
+    },
+    {
+      "id": "his_006",
+      "text": "The Titanic sank on its maiden voyage in what year?",
+      "choices": ["1912", "1920", "1908", "1918"],
+      "correctIndex": 0,
+      "difficulty": 1
+    },
+    {
+      "id": "his_007",
+      "text": "What empire was ruled by Julius Caesar?",
+      "choices": ["Greek", "Roman", "Ottoman", "Persian"],
+      "correctIndex": 1,
+      "difficulty": 1
+    },
+    {
+      "id": "his_008",
+      "text": "Who was known as the Maid of Orléans?",
+      "choices": ["Cleopatra", "Joan of Arc", "Queen Elizabeth I", "Marie Antoinette"],
+      "correctIndex": 1,
+      "difficulty": 1
+    },
+    {
+      "id": "his_009",
+      "text": "Which war was fought between the North and South regions in the United States?",
+      "choices": ["Revolutionary War", "Civil War", "Vietnam War", "World War I"],
+      "correctIndex": 1,
+      "difficulty": 1
+    },
+    {
+      "id": "his_010",
+      "text": "What was the name of the first man to walk on the Moon?",
+      "choices": ["Buzz Aldrin", "Neil Armstrong", "Yuri Gagarin", "Michael Collins"],
+      "correctIndex": 1,
+      "difficulty": 1
+    }
   ]
 }

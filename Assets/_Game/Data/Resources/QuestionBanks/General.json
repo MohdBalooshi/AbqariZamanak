@@ -1,17 +1,77 @@
 {
   "categoryId": "general",
   "categoryName": "General Knowledge",
-  "questionsPerRound": 5,
+  "questionsPerRound": 10,
   "questions": [
-    { "id": "gk_001", "text": "What is the capital of Japan?", "choices": ["Seoul", "Beijing", "Tokyo", "Osaka"], "correctIndex": 2, "difficulty": 1 },
-    { "id": "gk_002", "text": "Which planet is known as the Red Planet?", "choices": ["Venus", "Mars", "Jupiter", "Saturn"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "gk_003", "text": "How many continents are there in the world?", "choices": ["5", "6", "7", "8"], "correctIndex": 2, "difficulty": 1 },
-    { "id": "gk_004", "text": "Who painted the Mona Lisa?", "choices": ["Van Gogh", "Da Vinci", "Picasso", "Michelangelo"], "correctIndex": 1, "difficulty": 2 },
-    { "id": "gk_005", "text": "What is the largest ocean on Earth?", "choices": ["Indian", "Atlantic", "Pacific", "Arctic"], "correctIndex": 2, "difficulty": 1 },
-    { "id": "gk_006", "text": "Which language has the most native speakers?", "choices": ["English", "Mandarin", "Spanish", "Arabic"], "correctIndex": 1, "difficulty": 2 },
-    { "id": "gk_007", "text": "What is the fastest land animal?", "choices": ["Tiger", "Cheetah", "Horse", "Gazelle"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "gk_008", "text": "What is H₂O commonly known as?", "choices": ["Salt", "Water", "Hydrogen", "Oxygen"], "correctIndex": 1, "difficulty": 1 },
-    { "id": "gk_009", "text": "What is the square root of 64?", "choices": ["6", "7", "8", "9"], "correctIndex": 2, "difficulty": 1 },
-    { "id": "gk_010", "text": "How many colors are in a rainbow?", "choices": ["6", "7", "8", "9"], "correctIndex": 1, "difficulty": 1 }
+    {
+      "id": "gen_001",
+      "text": "What is the capital city of France?",
+      "choices": ["Paris", "Lyon", "Marseille", "Nice"],
+      "correctIndex": 0,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_002",
+      "text": "How many continents are there on Earth?",
+      "choices": ["5", "6", "7", "8"],
+      "correctIndex": 2,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_003",
+      "text": "What is the largest mammal on Earth?",
+      "choices": ["Elephant", "Blue Whale", "Giraffe", "Shark"],
+      "correctIndex": 1,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_004",
+      "text": "What currency is used in Japan?",
+      "choices": ["Yuan", "Won", "Yen", "Baht"],
+      "correctIndex": 2,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_005",
+      "text": "Which day comes after Friday?",
+      "choices": ["Thursday", "Sunday", "Saturday", "Monday"],
+      "correctIndex": 2,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_006",
+      "text": "How many legs does a spider have?",
+      "choices": ["6", "8", "10", "12"],
+      "correctIndex": 1,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_007",
+      "text": "Which ocean is the largest?",
+      "choices": ["Indian Ocean", "Atlantic Ocean", "Pacific Ocean", "Arctic Ocean"],
+      "correctIndex": 2,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_008",
+      "text": "What is the freezing point of water?",
+      "choices": ["0°C", "32°C", "100°C", "10°C"],
+      "correctIndex": 0,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_009",
+      "text": "What color is chlorophyll?",
+      "choices": ["Red", "Green", "Blue", "Yellow"],
+      "correctIndex": 1,
+      "difficulty": 1
+    },
+    {
+      "id": "gen_010",
+      "text": "Which country is known as the Land of the Rising Sun?",
+      "choices": ["China", "Thailand", "Japan", "Korea"],
+      "correctIndex": 2,
+      "difficulty": 1
+    }
   ]
 }

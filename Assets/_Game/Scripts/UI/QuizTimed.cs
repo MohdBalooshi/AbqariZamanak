@@ -27,7 +27,7 @@ public class QuizTimed : MonoBehaviour
     [Header("Per-Question Timer")]
     [SerializeField] private Image timerFill;        // Image (Type = Filled, Method = Horizontal, Origin = Left)
     [SerializeField] private TMP_Text timerText;     // optional seconds label
-    [SerializeField] private float secondsPerQuestion = 15f;
+    [SerializeField] private float secondsPerQuestion = 15f; // adjustable in Inspector
 
     [Header("Round Config")]
     [SerializeField] private int questionsPerRound = 10;
@@ -41,7 +41,7 @@ public class QuizTimed : MonoBehaviour
     [Header("Failure UI")]
     [SerializeField] private GameObject failPanel;
     [SerializeField] private Button btnAdRetry;
-    [SerializeField] private Button btnQuitFail;     // (optional) quit from fail panel -> LevelSelect
+    [SerializeField] private Button btnQuitFail;     // optional: quit from fail panel -> LevelSelect
 
     [Header("Quit Flow (in-quiz)")]
     [SerializeField] private Button btnQuitTop;      // top-right quit button
@@ -73,6 +73,7 @@ public class QuizTimed : MonoBehaviour
     // timer
     private float remaining;
     private bool timerRunning;
+    private Coroutine timerRoutine;                // single owner for the timer
 
     // pause/return
     private bool wasBackgrounded = false;
@@ -228,6 +229,14 @@ public class QuizTimed : MonoBehaviour
     // ---------- Question flow ----------
     private void NextQuestion()
     {
+        // Stop any old timer coroutine before starting a new one
+        if (timerRoutine != null)
+        {
+            StopCoroutine(timerRoutine);
+            timerRoutine = null;
+        }
+        timerRunning = false;
+
         currentIndex++;
         if (currentIndex >= roundQuestions.Count) { EndRound(); return; }
 
@@ -244,13 +253,40 @@ public class QuizTimed : MonoBehaviour
         // Shuffle choices
         SetupShuffledChoices(q);
 
-        // Reset & start timer (HARD reset UI first)
-        ResetTimerUI();
-        StartTimer();
+        // Start fresh timer (this also hard-resets the UI)
+        timerRoutine = StartCoroutine(TimerCountdown());
 
         // Re-enable answers
         SetAnswersInteractable(true);
         UpdateCounter();
+    }
+
+    private IEnumerator TimerCountdown()
+    {
+        remaining = Mathf.Max(1f, secondsPerQuestion);
+        UpdateTimerUI();            // fill to full, text = secondsPerQuestion
+        timerRunning = true;
+
+        while (remaining > 0f)
+        {
+            remaining -= Time.deltaTime;
+            UpdateTimerUI();
+            yield return null;
+        }
+
+        timerRunning = false;
+        // timeout counts as incorrect → move on
+        SetAnswersInteractable(false);
+        yield return new WaitForSecondsRealtime(0.2f);
+        NextQuestion();
+    }
+
+    private void UpdateTimerUI()
+    {
+        if (timerFill)
+            timerFill.fillAmount = Mathf.Clamp01(remaining / Mathf.Max(0.001f, secondsPerQuestion));
+        if (timerText)
+            timerText.text = Mathf.CeilToInt(remaining).ToString();
     }
 
     private void SetupShuffledChoices(QuestionEntry q)
@@ -295,72 +331,16 @@ public class QuizTimed : MonoBehaviour
         if (btnD) btnD.interactable = on;
     }
 
-    private void Update()
-    {
-        // Timer tick
-        if (timerRunning)
-        {
-            remaining -= Time.deltaTime;
-
-            if (timerFill)
-            {
-                float norm = Mathf.Clamp01(remaining / Mathf.Max(0.001f, secondsPerQuestion));
-                timerFill.fillAmount = norm;
-            }
-            if (timerText)
-            {
-                timerText.text = Mathf.Max(0, Mathf.CeilToInt(remaining)).ToString();
-            }
-
-            if (remaining <= 0f)
-            {
-                timerRunning = false;
-                // timeout counts as incorrect → move on
-                SetAnswersInteractable(false);
-                StartCoroutine(NextQuestionAfter(0.2f));
-            }
-        }
-    }
-
-    // ---- Timer helpers ----
-    private void ResetTimerUI()
-    {
-        // Force fill to 1 and text to full seconds every time we show a new question
-        if (timerFill)
-        {
-            timerFill.fillAmount = 1f;      // visually full
-        }
-        if (timerText)
-        {
-            int secs = Mathf.CeilToInt(Mathf.Max(1f, secondsPerQuestion));
-            timerText.text = secs.ToString();
-        }
-        // Ensure Unity immediately lays out changes
-        Canvas.ForceUpdateCanvases();
-    }
-
-    private void StartTimer()
-    {
-        remaining = Mathf.Max(1f, secondsPerQuestion);
-        timerRunning = true;
-    }
-
-    private void StopTimer()
-    {
-        timerRunning = false;
-    }
-
-    private void UpdateCounter()
-    {
-        if (!questionCounterText) return;
-        int shown = Mathf.Clamp(currentIndex + 1, 0, Mathf.Max(1, roundQuestions.Count));
-        int total = Mathf.Max(1, roundQuestions.Count);
-        questionCounterText.text = $"{shown}/{total}";
-    }
-
     private void OnAnswerPressed(int pressedSlotIndex)
     {
-        StopTimer();
+        // Stop the timer immediately to avoid overlap
+        if (timerRoutine != null)
+        {
+            StopCoroutine(timerRoutine);
+            timerRoutine = null;
+        }
+        timerRunning = false;
+
         SetAnswersInteractable(false);
 
         var q = roundQuestions[currentIndex];
@@ -393,11 +373,18 @@ public class QuizTimed : MonoBehaviour
         float percentAfter = SaveSystem.GetPercent(bank.categoryId, totalQs);
         improvedThisRound = percentAfter > percentBefore + 0.0001f;
 
+        if (resultsPanel) resultsPanel.SetActive(false);
+        if (failPanel)    failPanel.SetActive(false);
+
         if (correctThisRound < unlockThreshold)
         {
-            if (resultsPanel) resultsPanel.SetActive(false);
-            if (failPanel) { failPanel.SetActive(true); return; }
-            SceneManager.LoadScene("LevelSelect"); return;
+            if (failPanel)
+            {
+                failPanel.SetActive(true);
+                return;
+            }
+            SceneManager.LoadScene("LevelSelect");
+            return;
         }
 
         if (resultsPanel)
@@ -501,6 +488,14 @@ public class QuizTimed : MonoBehaviour
     }
 
     // ---------- Helpers ----------
+    private void UpdateCounter()
+    {
+        if (!questionCounterText) return;
+        int shown = Mathf.Clamp(currentIndex + 1, 0, Mathf.Max(1, roundQuestions.Count));
+        int total = Mathf.Max(1, roundQuestions.Count);
+        questionCounterText.text = $"{shown}/{total}";
+    }
+
     private static int TotalQuestionCount(CategoryBank b)
     {
         if (b == null) return 0;

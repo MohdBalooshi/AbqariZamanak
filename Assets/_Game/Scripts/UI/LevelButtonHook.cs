@@ -32,7 +32,7 @@ public class LevelButtonHook : MonoBehaviour
         _levelIndex = levelIndex;
         _unlocked = unlocked;
 
-        if (label) label.text = $"Level {_levelIndex}";
+        if (label) label.text = $"{_levelIndex}";
 
         var btn = GetComponent<Button>();
         var img = GetComponent<Image>();

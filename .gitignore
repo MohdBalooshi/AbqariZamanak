@@ -1,3 +1,4 @@
+# Unity .gitignore
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -6,8 +7,17 @@
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
 MemoryCaptures/
-Recordings/
-sysinfo.txt
+*.csproj
+*.sln
+*.user
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+.vs/
+# OS files
 .DS_Store
-.vscode/
-.idea/
+Thumbs.db
